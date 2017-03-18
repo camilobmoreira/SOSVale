@@ -41,7 +41,9 @@ public class Model {
 	}
 	
 	// FIXME 
-	// Permitir logar por nome de usuario/email/cpf e senh
+	// Permitir logar por nome de usuario/email/cpf e senha
+	// afafa sfaf
+	// asd
 	public Admin logarAdmin(String nomeUsuario, String senha ) 
 	{
 		Query query = admins.query();
