@@ -1,4 +1,5 @@
 package hello;
+
 import java.util.List;
 
 import com.db4o.Db4oEmbedded;
@@ -22,7 +23,7 @@ public class Model {
 		
 		for (Admin a: allAdmins) 
 		{
-			if (a.getConta().getNomeUsuario().equals(admin.getConta().getNomeUsuario())) 
+			if (a.getConta().getNomeUsuario().equalsIgnoreCase(admin.getConta().getNomeUsuario())) 
 			{
 				return false;
 			}
@@ -42,8 +43,6 @@ public class Model {
 	
 	// FIXME 
 	// Permitir logar por nome de usuario/email/cpf e senha
-	// afafa sfaf
-	// asd
 	public Admin logarAdmin(String nomeUsuario, String senha ) 
 	{
 		Query query = admins.query();
@@ -52,7 +51,7 @@ public class Model {
 		
 		for (Admin admin: allAdmins) 
 		{
-			if(admin.getConta().matches(nomeUsuario, senha ) ) 
+			if(admin.getConta().matches(nomeUsuario, senha )) 
 			{
 				return admin;
 			}
@@ -68,7 +67,7 @@ public class Model {
 		
 		for (Usuario u: allUsers) 
 		{
-			if (u.getConta().getNomeUsuario().equals(usuario.getConta().getNomeUsuario())) 
+			if (u.getConta().getNomeUsuario().equalsIgnoreCase(usuario.getConta().getNomeUsuario())) 
 			{
 				return false;
 			}
@@ -88,7 +87,7 @@ public class Model {
 	
 	// FIXME 
 	// Permitir logar por nome de usuario/email/cpf e senha
-	public Usuario logar(String nomeUsuario, String senha ) 
+	public Usuario loginUsuario(String nomeUsuario, String senha ) 
 	{
 		Query query = users.query();
 		query.constrain(Usuario.class);
@@ -134,8 +133,6 @@ public class Model {
 		}
 	}
 	
-	// FIXME
-	// Verificar condiçoes unicas de post (nome de titulo unico ou algo assim)
 	public void criarPost(Post post)
 	{	
 		Query query = posts.query();
@@ -166,7 +163,7 @@ public class Model {
 		
 		for (Post post: allPosts) 
 		{
-			if(post.getNomeUsuario().equals(nomeUsuario) && post.getTitulo().equals(titulo)) 
+			if(post.getNomeUsuario().equalsIgnoreCase(nomeUsuario) && post.getTitulo().equals(titulo)) 
 			{
 				return post;
 			}
@@ -192,7 +189,7 @@ public class Model {
 		
 		for (Post post: allPosts) 
 			{
-				if(post.getNomeUsuario().equals(postAntigo.getNomeUsuario()) && post.getDescricao().equals(postAntigo.getDescricao())) 
+				if(post.getNomeUsuario().equalsIgnoreCase(postAntigo.getNomeUsuario()) && post.getDescricao().equals(postAntigo.getDescricao())) 
 					{
 						post.setTitulo(novoPost.getTitulo());
 						post.setDescricao(novoPost.getDescricao());

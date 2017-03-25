@@ -52,7 +52,7 @@ public class Conta {
 	public boolean matches(String nomeUsuario, String senha)
 	{
 		//if (!nomeUsuario.equals(conta.nomeUsuario)) return false;
-		if (this.nomeUsuario.equals(nomeUsuario) && this.senha.equals(senha)) return true;
+		if (this.nomeUsuario.equalsIgnoreCase(nomeUsuario) && this.senha.equals(senha)) return true;
 		return false;
 	}
 }

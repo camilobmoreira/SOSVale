@@ -38,10 +38,13 @@ public class JUnitTests {
 		Usuario usuario = new Usuario("Maria Joaquina", cpf, conta);
 		model.cadastrarUsuario(usuario);
 		assertEquals(model.getUsuarios().size(), 1);
-		/*
-		//03 - Logar
-		assertEquals(model.logar(conta), usuario);
 		
+		
+		Usuario u = model.loginUsuario("majo", "123456");
+		
+		//03 - Logar
+		assertEquals(u.getCpf().getCpf(), "44247355830");
+		/*
 		//04 - Editar usuario
 		model.editarUsuario(conta, "maria_joaquina@gmail.com", "senha");
 		assertEquals(conta.getEmail(), "maria_joaquina@gmail.com");
@@ -49,6 +52,7 @@ public class JUnitTests {
 		//05 - Remover usuario
 		model.removerUsuario(conta);
 		assertEquals(model.getUsuarios().size(), 0);
+		*/
 		
 		//Criando nova localizacao
 		Localizacao localizacao = new Localizacao(47.09, 130.70);
@@ -59,12 +63,12 @@ public class JUnitTests {
 		//06 - Criando novo post
 		Post post = new Post("Erupção no vulcão Xinxango", "Muita lava e chuva de meteoro", localizacao, imagem, "majo", false);
 		model.criarPost(post);
-		assertEquals(model.getPosts().size(), 1);
 		assertEquals(post.getNomeUsuario(), "majo");
 		
 		//07 - Buscar post
 		assertEquals(post.getTitulo(), model.buscarPost("majo", "Erupção no vulcão Xinxango").getTitulo());
 		
+		/*
 		//08 - Editar post
 		Post post1 = new Post("Erupção no vulcão Xinxango", "Muita lava e chuva de pedra", localizacao, imagem, "majo", false);
 		model.editarPost(post, post1);
@@ -73,10 +77,9 @@ public class JUnitTests {
 		//09 - Aprovar post
 		model.aprovarPost(model.buscarPost("majo", "Erupção no vulcão Xinxango"));
 		assertEquals(true, model.buscarPost("majo", "Erupção no vulcão Xinxango").isAprovado());
-		
+		*/
 		//10 - Validar CPF
 		assertEquals(true, cpf.validarCpf("44247355830"));
-		*/
 		
 		//Criando nova conta Admin 
 		Conta contaAdmin = new Conta("root", "root@root.com", "pass", 'a');
