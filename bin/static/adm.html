@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Login</title>	
-    
+    <title>Admin</title>
+	
 	<script src="js/jquery-2.2.3.min.js"></script>
 	<script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 	<link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
@@ -17,7 +17,7 @@
 				var username = $('#username').val().trim();
 				var password = $('#password').val().trim();
 				
-				$.getJSON("/login/user/"+username+"/"+password+"?format=json&jsoncallback=",function(data) {
+				$.getJSON("/login/adm/"+username+"/"+password+"?format=json&jsoncallback=",function(data) {
 					
 					if(data[0].email == ""){ //data = retorno do JSON
 
@@ -25,23 +25,13 @@
 						$('#username').val("");
 						$('#password').val("");
 						
-					} else {					
+					} else {
 						window.location.href = '/sucess.html';
 					}	
 				});
 			});
-			
-			$('#caixaOpcoes').fadeOut(100);
-			$('#imgLogo').on("click",function(){
-			$('#caixaOpcoes').fadeIn("slow");
-			
-			});
-			
-			$('#imgFechar').on("click",function(){
-			$('#caixaOpcoes').fadeOut("slow");
-
-			});
 		});	
+		
 	</script>
   </head>
   <body>
@@ -50,10 +40,6 @@
 		<div class="container">
 		<div class="col-md-10 col-md-offset-1">
 		<div class="col-md-4">
-		<div id="caixaOpcoes">
-		<p>aaaaaa</p>
-		<img id="imgFechar" src="img/logo.png">
-		</div>
 		</div>
 		<div class="col-md-4">
 		<br>
@@ -64,7 +50,8 @@
 		<div class="row" style="text-align:center">
 		<img id="imgLogo" src="img/logo.png" style="cursor:pointer;text-align:center">	
 		</div>
-
+		
+		
 		<br><br>
 		
 		<form class="form-horizontal" method="post" id="form">
@@ -75,14 +62,10 @@
 					<input required="required" type="password" class="form-control" id="password" placeholder="Password">
 			</div>
 			<div class="row">
-			<div class="col-md-6" style="text-align:left">
+			<div class="col-md-6" style="text-align:center">
 			<div class="row">
 			<button style="width:100px" id="login" type="submit" class="btn btn-primary">Login</button>
 			</div>
-			</div>
-			<div class="col-md-6" style="text-align:right">
-			<div class="row">
-			<button id="Cadastrar" onclick="" class="btn btn-primary">Cadastre-se</button>
 			</div>
 			</div>
 			</div>

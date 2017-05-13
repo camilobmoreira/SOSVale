@@ -5,9 +5,9 @@ import org.junit.Test;
 
 /**
  * STORY CARDS
- * 01 - Matches da classe conta
- * 02 - Cadastrar usuario
- * 03 - Logar
+ * 01 - Cadastrar usuario
+ * 02 - Logar com username
+ * 03 - Matches da classe conta
  * 04 - Editar usuario
  * 05 - Remover usuario 
  * 06 - Cadastrar post
@@ -25,25 +25,31 @@ public class JUnitTests {
 		
 		//Criando model
 		Model model = new Model();
+					
+		//01 - Criando e cadastrando usuario
+		User user = new User();
+		user.setUsername("majo");
+		user.setEmail("maria_joaquina@teste.com");
+		user.setPassword("123456");
+		user.setFullName("Maria Joaquina");
+		user.setCpf("44247355830");
+		user.setAccountType((byte) 1);
+		try {
+			model.addUser(user);
+			assertEquals(model.getUsers().size(), 1);
+		} catch (RuntimeException e) {
+			//System.out.println(e.getMessage());
+		}
 		
-		//Criando nova conta
-		Conta conta = new Conta("majo", "maria_joaquina@gmail.com", "123456", 'u');
+
+		//03 - Logar com username
+		User u = model.loginUsername("majo", "123456");
+		assertEquals(user.getUsername(), u.getUsername());
 		
-		//01 - Matches da classe Conta
-		assertEquals(conta.matches(conta.getNomeUsuario(), conta.getSenha()), true);
-		assertEquals(conta.matches("jfran", "654321"), false);
+		//03 - Matches da classe User
+		assertEquals(user.matches(user.getCpf(), user.getEmail(), user.getUsername(), user.getPassword()), true);
+		assertEquals(user.matches("12345678900", "jfran@gmail.com", "jfran", "654321"), false);
 		
-		//02 - Criando e cadastrando usuario
-		Cpf cpf = new Cpf("44247355830");
-		Usuario usuario = new Usuario("Maria Joaquina", cpf, conta);
-		model.cadastrarUsuario(usuario);
-		assertEquals(model.getUsuarios().size(), 1);
-		
-		
-		Usuario u = model.loginUsuario("majo", "123456");
-		
-		//03 - Logar
-		assertEquals(u.getCpf().getCpf(), "44247355830");
 		/*
 		//04 - Editar usuario
 		model.editarUsuario(conta, "maria_joaquina@gmail.com", "senha");
@@ -55,18 +61,19 @@ public class JUnitTests {
 		*/
 		
 		//Criando nova localizacao
-		Localizacao localizacao = new Localizacao(47.09, 130.70);
+		Location location = new Location(47.09, 130.70);
 		
 		//Criando nova imagem
-		Imagem imagem = new Imagem("Erupção vulcânica", "imagem", "vulcão");
+		Image image = new Image("Erupção vulcânica", "imagem", "vulcão");
 				
 		//06 - Criando novo post
-		Post post = new Post("Erupção no vulcão Xinxango", "Muita lava e chuva de meteoro", localizacao, imagem, "majo", false);
-		model.criarPost(post);
-		assertEquals(post.getNomeUsuario(), "majo");
+		Post post = new Post("Erupção no vulcão Xinxango", "Muita lava e chuva de meteoro", location, image, "majo");
+		model.addPost(post);
+		model.approvePost(post);
+		assertEquals(post.getUsername(), "majo");
 		
 		//07 - Buscar post
-		assertEquals(post.getTitulo(), model.buscarPost("majo", "Erupção no vulcão Xinxango").getTitulo());
+		assertEquals(post.getTitle(), model.searchApprovedPost("majo", "Erupção no vulcão Xinxango").getTitle());
 		
 		/*
 		//08 - Editar post
@@ -79,17 +86,7 @@ public class JUnitTests {
 		assertEquals(true, model.buscarPost("majo", "Erupção no vulcão Xinxango").isAprovado());
 		*/
 		//10 - Validar CPF
-		assertEquals(true, cpf.validarCpf("44247355830"));
-		
-		//Criando nova conta Admin 
-		Conta contaAdmin = new Conta("root", "root@root.com", "pass", 'a');
-				
-		//11 - Criando e cadastrando Admin
-		Cpf cpf1 = new Cpf("33023667870");
-		Admin admin = new Admin("admin", cpf1 , contaAdmin);
-		model.addAdmin(admin);
-		assertEquals(model.getAdmins().size(), 1);
-		
+		assertEquals(true, User.cpfIsValid("44247355830"));
 	}
 
 }

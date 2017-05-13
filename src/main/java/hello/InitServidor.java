@@ -1,6 +1,5 @@
 package hello;
 
-import static org.junit.Assert.assertEquals;
 import static spark.Spark.*;
 
 public class InitServidor {
@@ -25,7 +24,23 @@ public class InitServidor {
 		
 		REST controller = new REST(model); 
 		
-		controller.logarAdmin();
+		// User rotes
+		controller.addUser();
+		controller.changeEmail();
+		controller.changePassword();
+		controller.loginCpf();
+		controller.loginEmail();
+		controller.loginUserName();
+		controller.removeUser();
+		
+		// Post rotes
+		controller.addPost();
+		controller.approvePost();
+		// controller.editPost();
+		controller.searchApprovedPost();
+		controller.searchNonApprovedPost();
+		controller.searchPostsByType();
+
     }
 	
 	public static void initialize ()

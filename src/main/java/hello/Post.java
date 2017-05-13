@@ -2,70 +2,87 @@ package hello;
 
 public class Post {
 	
-	private String titulo;
-	private String descricao;
-	private Localizacao localizacao;
-	private Imagem imagem;
-	private String nomeUsuario;
-	private boolean aprovado;
+	private String title;
+	private String description;
+	private Location location;
+	private Image image;
+	private String username;
+	private String postType;
+	private boolean approved = false;
 	
-	public Post (String titulo, String descricao, Localizacao localizacao, Imagem imagem, String nomeUsuario, boolean aprovado)
-	{
-		this.titulo = titulo;
-		this.descricao = descricao;
-		this.localizacao = localizacao;
-		this.imagem = imagem;
-		this.nomeUsuario = nomeUsuario;
-		this.aprovado = aprovado;
+	public Post () {
+		super();
+		this.approved = false;
+	}
+
+	public Post(String title, String description, Location location, Image image, String username, String postType) {
+		super();
+		this.title = title;
+		this.description = description;
+		this.location = location;
+		this.image = image;
+		this.username = username;
+		this.postType = postType;
+		this.approved = false;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPostType() {
+		return postType;
+	}
+
+	public void setPostType(String postType) {
+		this.postType = postType;
+	}
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 	
-	public String getTitulo(){
-		return titulo;
-	}
 	
-	public void setTitulo(String titulo){
-		this.titulo = titulo;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public Localizacao getLocalizacao() {
-		return localizacao;
-	}
-
-	public void setLocalizacao(Localizacao localizacao) {
-		this.localizacao = localizacao;
-	}
-
-	public Imagem getImagem() {
-		return imagem;
-	}
-
-	public void setImagem(Imagem imagem) {
-		this.imagem = imagem;
-	}
-
-	public String getNomeUsuario() {
-		return nomeUsuario;
-	}
-
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeUsuario = nomeUsuario;
-	}
-
-	public boolean isAprovado() {
-		return aprovado;
-	}
-
-	public void setAprovado(boolean aprovado) {
-		this.aprovado = aprovado;
-	}
 	
 	
 }

@@ -1,5 +1,6 @@
 package hello;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.db4o.Db4oEmbedded;
@@ -7,200 +8,225 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 
-import java.util.LinkedList;
-
 public class Model {
 	
-	ObjectContainer admins = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "bd/admins.db4o");
 	ObjectContainer users = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "bd/users.db4o");
 	ObjectContainer posts = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "bd/posts.db4o");
+
 	
-	public boolean addAdmin (Admin admin)
-	{
-		Query query = admins.query();
-		query.constrain(Admin.class);
-		ObjectSet<Admin> allAdmins = query.execute();
-		
-		for (Admin a: allAdmins) 
-		{
-			if (a.getConta().getNomeUsuario().equalsIgnoreCase(admin.getConta().getNomeUsuario())) 
-			{
-				return false;
-			}
-		}
-		admins.store(admin);
-		return true;
-	}
-	
-	public List<Admin> getAdmins()
-	{
-		Query query = admins.query();
-		query.constrain(Admin.class);
-		ObjectSet<Admin> allAdmins = query.execute();
-		
-		return allAdmins;
-	}
-	
-	// FIXME 
-	// Permitir logar por nome de usuario/email/cpf e senha
-	public Admin logarAdmin(String nomeUsuario, String senha ) 
-	{
-		Query query = admins.query();
-		query.constrain(Admin.class);
-		ObjectSet<Admin> allAdmins = query.execute();
-		
-		for (Admin admin: allAdmins) 
-		{
-			if(admin.getConta().matches(nomeUsuario, senha )) 
-			{
-				return admin;
-			}
-		}
-		return null;
-	}
-	
-	public boolean cadastrarUsuario(Usuario usuario)
-	{
+	//User methods
+	public void addUser(User user) {
 		Query query = users.query();
-		query.constrain(Usuario.class);
-		ObjectSet<Usuario> allUsers = query.execute();
+		query.constrain(User.class);
+		ObjectSet<User> allUsers = query.execute();
 		
-		for (Usuario u: allUsers) 
-		{
-			if (u.getConta().getNomeUsuario().equalsIgnoreCase(usuario.getConta().getNomeUsuario())) 
-			{
-				return false;
+		for (User u: allUsers) {
+			if (u.getCpf().equalsIgnoreCase(user.getCpf())) {
+				throw(new RuntimeException("Cpf já cadastrado"));
+			} else if (u.getUsername().equalsIgnoreCase(user.getUsername())) {
+				throw(new RuntimeException("Nome de usuário já cadastrado"));
+			} else if (u.getEmail().equalsIgnoreCase(user.getEmail())) {
+				throw(new RuntimeException("Email já cadastrado"));
 			}
 		}
-		users.store(usuario);
-		return true;
+		this.users.store(user);
+		this.users.commit();
 	}
 	
-	public List<Usuario> getUsuarios()
-	{
+	public List<User> getUsers() {
 		Query query = users.query();
-		query.constrain(Usuario.class);
-		ObjectSet<Usuario> allUsers = query.execute();
+		query.constrain(User.class);
+		ObjectSet<User> allUsers = query.execute();
 		
 		return allUsers;
 	}
 	
-	// FIXME 
-	// Permitir logar por nome de usuario/email/cpf e senha
-	public Usuario loginUsuario(String nomeUsuario, String senha ) 
-	{
+	public void changeEmail(User user, String newEmail, String password) {
 		Query query = users.query();
-		query.constrain(Usuario.class);
-		ObjectSet<Usuario> allUsers = query.execute();
+		query.constrain(User.class);
+		ObjectSet<User> allUsers = query.execute();
 		
-		for (Usuario usuario: allUsers) 
-		{
-			if (usuario.getConta().matches(nomeUsuario, senha)) 
-			{
-				return usuario;
+		/*for (User u: allUsers) {
+			if (u.matchesCpf(user.getCpf(),
+					user.getPassword())) {
+				
+				u.setEmail(newEmail);
+				u.setPassword(password);
+				this.users.store(u);
+				this.users.commit();
+			}
+		}*/
+		
+		user.setEmail(newEmail);
+		allUsers.set(allUsers.indexOf(user), user);
+	}
+	
+	public void changePassword(User user, String password, String newPassword) throws RuntimeException {
+		Query query = users.query();
+		query.constrain(User.class);
+		ObjectSet<User> allUsers = query.execute();
+		
+		/*for (User u: allUsers) {
+			if (u.matchesCpf(user.getCpf(),
+					user.getPassword())) {
+				
+				u.setPassword(newPassword);
+				this.users.store(u);
+				this.users.commit();
+			}
+		}*/
+		
+		user.setPassword(newPassword);
+		allUsers.set(allUsers.indexOf(user), user);
+	}
+	
+	public User loginCpf(String cpf, String senha ) {
+		Query query = users.query();
+		query.constrain(User.class);
+		ObjectSet<User> allUsers = query.execute();
+		
+		for (User user: allUsers) {
+			if (user.matchesCpf(cpf, senha)) {
+				return user;
 			}
 		}
 		return null;
 	}
 	
-	// FIXME 
-	// alterar este metodo APENAS para editar email e criar novo APENAS para alterar senha
-	public void editarUsuario(Conta conta, String email, String senha)
-	{
+	public User loginEmail(String email, String senha ) {
 		Query query = users.query();
-		query.constrain(Usuario.class);
-		ObjectSet<Usuario> allUsers = query.execute();
+		query.constrain(User.class);
+		ObjectSet<User> allUsers = query.execute();
 		
-		for (Usuario usuario: allUsers)
-		{
-			if (conta.matches(usuario.getConta()))
-			{
-				conta.setEmail(email);
-				conta.setSenha(senha);
+		for (User user: allUsers) {
+			if (user.matchesEmail(email, senha)) {
+				return user;
 			}
 		}
+		return null;
+	}
+	
+	public User loginUsername(String nomeUsuario, String senha ) {
+		Query query = users.query();
+		query.constrain(User.class);
+		ObjectSet<User> allUsers = query.execute();
+		
+		for (User user: allUsers) {
+			if (user.matchesUserName(nomeUsuario, senha)) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
+	public void removeUser(String username) {
+		Query query = users.query();
+		query.constrain(User.class);
+		ObjectSet<User> allUsers = query.execute();
+		
+		for (User u: allUsers) {
+			if (u.getUsername().equalsIgnoreCase(username)){
+				this.users.delete(u);
+				this.users.commit();
+			}
+		}
+		throw(new RuntimeException("Usuário não localizado"));
+	}
+	
+	
+	//Post methods
+	public void addPost(Post post) {	
+		/*
+		Query query = posts.query();
+		query.constrain(Post.class);
+		ObjectSet<Post> allPosts = query.execute();
+		*/
+		
+		this.posts.store(post);
+		this.posts.commit();
 	}
 
 	// FIXME
-	public void removerUsuario(Conta conta)
-	{
-		for (Usuario usuario: usuarios)
-		{
-			if (conta.matches(usuario.getConta())) 
-			{
-				usuarios.remove(usuario);
+	public void approvePost(Post post) {
+		post.setApproved(true);
+		this.posts.store(post);
+		this.posts.commit();
+	}
+	
+	// FIXME
+	public void editPost(Post postAntigo, Post novoPost) {
+		Query query = posts.query();
+		query.constrain(Post.class);
+		ObjectSet<Post> allPosts = query.execute();
+		
+		for (Post post: allPosts) {
+			if(post.getUsername().equalsIgnoreCase(postAntigo.getUsername()) 
+					&& post.getDescription().equals(postAntigo.getDescription())) {
+				
+				post.setTitle(novoPost.getTitle());
+				post.setDescription(novoPost.getDescription());
+				post.setImage(novoPost.getImage());
+				post.setLocation(novoPost.getLocation());
+				this.posts.store(post);
+				this.posts.commit();
 			}
 		}
 	}
 	
-	public void criarPost(Post post)
-	{	
-		Query query = posts.query();
-		query.constrain(Post.class);
-		ObjectSet<Post> allPosts = query.execute();
+	public LinkedList<Post> searchApprovedPost() {
 		
-		posts.store(post);
-	}
-	
-	// FIXME 
-	// Verificar se não vai retornar todos os posts existentes ao inves de apenas os do próprio usuario
-	public List<Post> getPosts()
-	{
-		Query query = posts.query();
-		query.constrain(Post.class);
-		ObjectSet<Post> allPosts = query.execute();
-		
-		return allPosts;
-	}
-	
-	// FIXME 
-	// Verificar metodo melhor pra buscar post
-	public Post buscarPost(String nomeUsuario, String titulo)
-	{
+		LinkedList<Post> allApprovedPosts = new LinkedList<>();
 		Query query = posts.query();
 		query.constrain(Post.class);
 		ObjectSet<Post> allPosts = query.execute(); 
 		
-		for (Post post: allPosts) 
-		{
-			if(post.getNomeUsuario().equalsIgnoreCase(nomeUsuario) && post.getTitulo().equals(titulo)) 
-			{
-				return post;
+		for (Post post: allPosts) {
+			if(post.isApproved()) {
+					allApprovedPosts.add(post);
 			}
 		}
-			
-		return null;
+		return allApprovedPosts;
+	}
+	
+	public LinkedList<Post> searchNonApprovedPost() {
+		
+		LinkedList<Post> allNonApprovedPosts = new LinkedList<>();
+		Query query = posts.query();
+		query.constrain(Post.class);
+		ObjectSet<Post> allPosts = query.execute(); 
+		
+		for (Post post: allPosts) {
+			if(!post.isApproved()) {
+					allNonApprovedPosts.add(post);
+			}
+		}
+		return allNonApprovedPosts;
 	}
 
+	public LinkedList<Post> searchPostsByType (String postType) {
+		
+		LinkedList<Post> allPostsByType = new LinkedList<>();
+		Query query = posts.query();
+		query.constrain(Post.class);
+		ObjectSet<Post> allPosts = query.execute(); 
+		
+		for (Post post: allPosts) {
+			if(post.isApproved()) {
+				if(post.getPostType().equalsIgnoreCase(postType)) {
+					allPostsByType.add(post);
+				}
+			}
+		}
+		return allPostsByType;
+	}
+	
+	// PARA APP ANDROID
 	/* Criar metodo para buscar por localização aproximada / nome local
-	public Post buscarPost(Localizacao localizacao)
+	public Post buscarPost(Location localizacao)
 	{
 		for (Post post: posts) if()
 		return null;
 	}*/
 	
-	// FIXME
-	// Verificar se metodo vai funcionar ainda com a view
-	public void editarPost(Post postAntigo, Post novoPost)
-	{
-		Query query = posts.query();
-		query.constrain(Post.class);
-		ObjectSet<Post> allPosts = query.execute();
-		
-		for (Post post: allPosts) 
-			{
-				if(post.getNomeUsuario().equalsIgnoreCase(postAntigo.getNomeUsuario()) && post.getDescricao().equals(postAntigo.getDescricao())) 
-					{
-						post.setTitulo(novoPost.getTitulo());
-						post.setDescricao(novoPost.getDescricao());
-						post.setImagem(novoPost.getImagem());
-						post.setLocalizacao(novoPost.getLocalizacao());
-					}
-			}
-	}
 	
-	public void aprovarPost(Post post)
-	{
-		post.setAprovado(true);
-	}
 }

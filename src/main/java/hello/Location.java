@@ -1,11 +1,15 @@
 package hello;
 
-public class Localizacao {
+public class Location {
 	
 	private double latitude;
 	private double longitude;
 	
-	public Localizacao (double latitude, double longitude)
+	public Location() {
+		super();
+	}
+
+	public Location (double latitude, double longitude)
 	{
 		this.latitude = latitude;
 		this.longitude = longitude;
