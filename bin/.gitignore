@@ -1,4 +1,4 @@
 /hello/
 ../bd/
 *.class
-*.db40
+*.db4o
