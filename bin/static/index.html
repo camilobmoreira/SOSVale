@@ -1,94 +1,166 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Login</title>	
-    
-	<script src="js/jquery-2.2.3.min.js"></script>
-	<script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-	<link href="bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
-	
-	<script>
-		$(document).ready(function(){
-			$('form').submit(function(e){    
-			
-				e.preventDefault();
-				
-				var username = $('#username').val().trim();
-				var password = $('#password').val().trim();
-				
-				$.getJSON("/login/user/"+username+"/"+password+"?format=json&jsoncallback=",function(data) {
-					
-					if(data[0].email == ""){ //data = retorno do JSON
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>SOSVale</title>
+    <script type="text/javascript" src="bootstrap-3.3.6-dist/js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="bootstrap-3.3.6-dist/js/gmaps.js"></script>
+    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
 
-						alert("Dados inválidos!");
-						$('#username').val("");
-						$('#password').val("");
-						
-					} else {					
-						window.location.href = '/sucess.html';
-					}	
-				});
-			});
-			
-			$('#caixaOpcoes').fadeOut(100);
-			$('#imgLogo').on("click",function(){
-			$('#caixaOpcoes').fadeIn("slow");
-			
-			});
-			
-			$('#imgFechar').on("click",function(){
-			$('#caixaOpcoes').fadeOut("slow");
+<body style="background-image:url(img/background_bolinhas.jpg)">
+<div class="container">
+<div class="col-lg-8">
+<div class="col-lg-12" style="text-align:center;margin-top:5%;">
+<scan style="font-family:Arial,cursive,san-serif;font-size:40px;font-weight:900;color:#1C1C1C;letter-spacing:0px;">Posts Recentes</scan>
+</div>
+<div class="row" style="padding-top:15%">
+<div class="row" style="border-style:solid;border-radius:10px;border-color:#DCDCDC;border-radius:100px;">
+<div class="col-lg-4" style="margin-top:10%;margin-bottom:5%">
+<div class="col-lg-11" style="background-color:#f68b1f;border-radius:10px;background-size:50% auto;border-radius:15px">
+<div class="col-lg-2" >
+<div class="row">
+<p></p>
+<p><img src="img/icone_incendio.png"width="25" height="25"></p>
+</div>
+</div>
+<div class="col-lg-9" style="margin-top:2%;margin-left:7%">
+<div style="width:2px;height:30px;background-color:white;float:left;position:absolute;margin-top:5px;margin-left:-10px;border-radius:20px">
+</div>
+<p style="color:white;font-size:11px;font-family:Arial,cursive,san-serif;margin-top:5px"> Post mais recente de incêndio</p>
+</div>
+</div>
 
-			});
-		});	
-	</script>
-  </head>
-  <body>
-		<br>
-		<br>	
-		<div class="container">
-		<div class="col-md-10 col-md-offset-1">
-		<div class="col-md-4">
-		<div id="caixaOpcoes">
-		<p>aaaaaa</p>
-		<img id="imgFechar" src="img/logo.png">
-		</div>
-		</div>
-		<div class="col-md-4">
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<div class="row" style="text-align:center">
-		<img id="imgLogo" src="img/logo.png" style="cursor:pointer;text-align:center">	
-		</div>
+<div class="col-lg-12" style="padding-top:10%;">
+<div class="row">
+<img src="img/Incendio.jpg" width="85%" style="border-radius:50%">
+</div>
+<div class="row">
+<p style="font-size:14px;color:#f68b1f;font-weight:900;margin-top:10px;margin-left:50px">Titulo do Post</p>
+<p style="text-align:justify;margin-left:20px">aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa</p>
+</div>
+</div>
+</div>
 
-		<br><br>
-		
-		<form class="form-horizontal" method="post" id="form">
-			<div class="form-group">		
-					<input required="required" type="text" class="form-control" id="username" placeholder="Username">
-			</div>
-			<div class="form-group">
-					<input required="required" type="password" class="form-control" id="password" placeholder="Password">
-			</div>
-			<div class="row">
-			<div class="col-md-6" style="text-align:left">
-			<div class="row">
-			<button style="width:100px" id="login" type="submit" class="btn btn-primary">Login</button>
-			</div>
-			</div>
-			<div class="col-md-6" style="text-align:right">
-			<div class="row">
-			<button id="Cadastrar" onclick="" class="btn btn-primary">Cadastre-se</button>
-			</div>
-			</div>
-			</div>
-		</form>
-		</div>
-		</div>
-		</div>
-  </body>
+
+
+<div class="col-lg-4"style="margin-top:10%;margin-bottom:5%">
+<div class="col-lg-11" style="background-color:#20bec6;border-radius:10px;background-size:100% auto;border-radius:15px">
+<div class="col-lg-2" >
+<div class="row">
+<p></p>
+<p><img src="img/ICONES_CARRO_HIGIENE.png"width="25" height="25"></p>
+</div>
+</div>
+<div class="col-lg-9" style="margin-top:2%;margin-left:7%">
+<div style="width:2px;height:30px;background-color:white;float:left;position:absolute;margin-top:5px;margin-left:-10px;border-radius:20px">
+</div>
+<p style="color:white;font-size:11px;font-family:Arial,cursive,san-serif;margin-top:5px"> Post mais recente de Alagamento</p>
+</div>
+</div>
+<div class="col-lg-1">
+</div>
+
+<div class="col-lg-12" style="padding-top:10%;">
+<div class="row">
+<img src="img/Alagamento.jpg" width="85%" style="border-radius:50%">
+</div>
+<div class="row">
+<p style="font-size:14px;color:#20bec6;font-weight:900;margin-top:10px;margin-left:50px">Titulo do Post</p>
+<p style="text-align:justify;margin-left:20px">aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa</p>
+</div>
+</div>
+</div>
+
+
+
+<div class="col-lg-4" style="margin-top:10%;margin-bottom:5%">
+<div class="col-lg-11" style="background-color:#b2d235;border-radius:10px;background-size:100% auto;border-radius:15px">
+<div class="col-lg-2" >
+<div class="row">
+<p></p>
+<p><img src="img/icone_erosao.png"width="25" height="25"></p>
+</div>
+</div>
+<div class="col-lg-9" style="margin-top:2%;margin-left:7%">
+<div style="width:2px;height:30px;background-color:white;float:left;position:absolute;margin-top:5px;margin-left:-10px;border-radius:20px">
+</div>
+<p style="color:white;font-size:11px;font-family:Arial,cursive,san-serif;margin-top:5px"> Post mais recente de deslizamento</p>
+</div>
+<div class="col-lg-1">
+</div>
+</div>
+
+
+
+<div class="col-lg-12" style="padding-top:10%;">
+<div class="row">
+<img src="img/deslizamento.jpg" width="85%" style="border-radius:50%">
+</div>
+<div class="row">
+<p style="font-size:14px;color:#b2d235;font-weight:900;margin-top:10px;margin-left:50px">Titulo do Post</p>
+<p style="text-align:justify;margin-left:20px">aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-lg-4">
+<div class="col-lg-12" style="text-align:center;margin-top:13%;">
+<scan style="font-family:Arial,cursive,san-serif;font-size:30px;font-weight:900;color:#1C1C1C;letter-spacing:0px;">Cadastre seu post</scan>
+</div>
+<div class="col-lg-12" style="border-style:solid;border-radius:80px;border-color:#DCDCDC;margin-top:5%;border-left-width:10px;border-left-color:#8B8878">
+<form method="POST">
+<br><br><br><br>
+<input placeholder="Titulo do post" id="titulo" size="20" style="border-color:#DCDCDC;border-radius:10px;text-align:left" ></input>
+<select style="border-color:#DCDCDC;border-radius:10px;border-style:solid;text-align:center">
+  <option value="Incendio">Incendio</option>
+  <option value="Deslizamento">Deslizamento</option>
+  <option value="Alagamento">Alagamento</option>
+</select>
+<br><br>
+<textarea placeholder="Mensagem do post" id="msg" cols="45" rows="3" style="border-color:#DCDCDC;border-radius:10px;" ></textarea>
+<br><br><br><br>
+<ul id="gmaps_context_menu" style="background: white; list-style: none; padding: 8px; left: 690px; top: 484.62px; display: none; position: absolute; min-width: 100px; box-shadow: 2px 2px 6px #ccc;" >
+</ul>
+<br><br>
+</form>
+</div>
+
+</div>
+</div>
+
+
+
+
+
+</body>
+<script>
+map.setContextMenu({
+  control: 'map',
+  options: [{
+    title: 'Add marker',
+    name: 'add_marker',
+    action: function(e) {
+      this.addMarker({
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+        title: 'New marker'
+      });
+    }
+  }, {
+    title: 'Center here',
+    name: 'center_here',
+    action: function(e) {
+      this.setCenter(e.latLng.lat(), e.latLng.lng());
+    }
+  }]
+});
+</script>
 </html>
