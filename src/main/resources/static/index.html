@@ -10,6 +10,23 @@
 	<link href="bootstrap-3.3.6-dist/css/bootstrap.css" rel="stylesheet">
 	
 	<script>
+	
+	function validateEmail(email) {
+	    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	    return re.test(email);
+	}
+	
+	function validateCPF(cpf){
+		var re = /^([0-9]{11})$/;
+		return re.test(cpf);
+	}
+	
+	function validateUser(user){
+		var re = /^[a-zA-Z0-9_-]{3,16}$/;
+		return re.test(user);
+	}
+
+	
 		$(document).ready(function(){
 			$('form').submit(function(e){    
 			
@@ -17,22 +34,21 @@
 				
 				var username = $('#username').val().trim();
 				var password = $('#password').val().trim();
-				
-				alert('ola');				
-				
-				/*jQuery(function () {
-					$('#username').keyup(function () {
-						var VAL = this.value;					
-						alert('oi');
-
-						var email = new RegExp('^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$'); 
-
-						if (email.test(VAL)) {
-						    alert('Great, you entered an E-Mail-address');
-						}
-			    		});
-				});*/
-				
+			
+		
+				if(validateEmail(username) == true)
+					{
+					alert("Passou Email!");
+					}
+				else if(validateCPF(username) == true)
+					{
+					alert("Passou CPF!");
+					}
+				else if(validateUser(username) == true)
+					{
+					alert("Passou Username!");
+					}
+	
 				$.getJSON("/login/user/"+username+"/"+password+"?format=json&jsoncallback=",function(data) {
 					
 					if(data[0].email == ""){ //data = retorno do JSON
