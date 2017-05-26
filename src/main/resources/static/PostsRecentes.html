@@ -75,6 +75,21 @@
     	  }
     	});
       
+      
+      
+      $('form').submit(function(e){    
+// Declaração de variaveis			
+			e.preventDefault();
+			
+			var e = document.getElementById("categoria");
+			var itemSelecionado = e.options[e.selectedIndex].text;
+			
+			var titulo = $('#titulo').val().trim();
+			var msg = $('#msg').val().trim();
+
+			
+		});			
+      
   }); 
     
    
@@ -193,7 +208,7 @@
 <input placeholder="Titulo do post" id="titulo" size="20" style="border-color:#DCDCDC;border-radius:10px;text-align:left;" ></input>
 </div>
 <div class="col-lg-6">
-<select style="border-color:#DCDCDC;border-radius:10px;border-style:solid;text-align:center">
+<select id="categoria" style="border-color:#DCDCDC;border-radius:10px;border-style:solid;text-align:center">
   <option value="Incendio">Incendio</option>
   <option value="Deslizamento">Deslizamento</option>
   <option value="Alagamento">Alagamento</option>
@@ -213,6 +228,9 @@
 <div id="map" style="border-radius:10px;max-width:315px;max-height:250px;margin-left:5%;margin-top:5%" class="col-lg-12" >
 </div>
 <br><br>
+<div class="col-lg-12" style="margin-top:5%;text-align:center;">
+<button style="border-radius:8px" type="submit">Cadastrar</button>
+</div>
 </form>
 </div>
 </div>
