@@ -36,18 +36,31 @@
 				var password = $('#password').val().trim();
 			
 		
-				if(validateEmail(username) == true)
-					{
+				if(validateEmail(username) == true) {
 					alert("Passou Email!");
-					}
-				else if(validateCPF(username) == true)
-					{
+					$.post("/login/email", JSON.stringify({'username': username, 'password': password}), function(data){
+					
+						if(data[0].status == 0){
+							alert(data[0].mensagem);
+
+							window.location.href = '/index.html';
+						
+						} else {
+					
+							sessionStorage.setItem("username", data[0].username);
+							sessionStorage.setItem("fullname", data[0].fullname);
+							sessionStorage.setItem("accountType", data[0].accountType);
+							window.location.href = '/PostsRecentes.html';
+						}
+					
+					}, "json");
+				}
+				else if(validateCPF(username) == true) {
 					alert("Passou CPF!");
-					}
-				else if(validateUser(username) == true)
-					{
+				}
+				else if(validateUser(username) == true) {
 					alert("Passou Username!");
-					}
+				}
 	
 				$.getJSON("/login/user/"+username+"/"+password+"?format=json&jsoncallback=",function(data) {
 					

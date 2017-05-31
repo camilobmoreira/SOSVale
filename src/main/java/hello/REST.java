@@ -25,7 +25,7 @@ public class REST{
 	}
 	
 	
-	// User rotes
+	// User routes
 	public void addUser() {
 		post("/addUser", new Route() {
 			@Override
@@ -41,6 +41,8 @@ public class REST{
 	        	String cpf = json.getString("cpf");
 	        	String email = json.getString("email");
     			
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
 	        	try {
 		        	User user = new User();
 		        	user.setFullName(fullName);
@@ -53,9 +55,13 @@ public class REST{
 	        	
 	            	model.addUser(user);
         		} catch (RuntimeException e) {
-        			return new JSONObject().put("mensagem", e.getMessage());
+        			jsonObj.put("mensagem", e.getMessage());
+        			jsonResult.put(jsonObj);
+        			return jsonResult;
         		} 
-	        	return new JSONObject().put("mensagem", "Cadastrado com sucesso!");
+	        	jsonObj.put("mensagem", "Cadastrado com sucesso!");
+	        	jsonResult.put(jsonObj);
+    			return jsonResult;
 	         }
 	      });	
 	}
@@ -75,13 +81,19 @@ public class REST{
 	        	// FIXME
 	        	User user = new User(); //pegar user da sessao html 
 	        	
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
 	        	if (!user.getPassword().equals(password)) {
-	        		return new JSONObject().put("mensagem", "Senha inválida.");
+	        		jsonObj.put("mensagem", "Senha inválida.");
+	        		jsonResult.put(jsonObj);
+	    			return jsonResult;
 	        	}
 	        	
 	        	model.changeEmail(user, newEmail, password);
 	        	
-	        	return new JSONObject().put("mensagem", "Email alterado com sucesso.");
+	        	jsonObj.put("mensagem", "Email alterado com sucesso.");
+	        	jsonResult.put(jsonObj);
+    			return jsonResult;
 	         }
 	      });	
 	}
@@ -102,16 +114,24 @@ public class REST{
 	        	// FIXME
 	        	User user = new User(); //pegar user da sessao html 
 	        	
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
 	        	if (!password.equals(password2)) {
-	        		return new JSONObject().put("mensagem", "Senhas não conferem.");
+	        		jsonObj.put("mensagem", "Senhas não conferem.");
+	        		jsonResult.put(jsonObj);
+	        		return jsonResult;
 	        	} 
 	        	try {
 	        		model.changePassword(user, password, newPassword);
 	        	} catch (RuntimeException e) {
-	        		return new JSONObject().put("mensagem", e.getMessage());
+	        		jsonObj.put("mensagem", e.getMessage());
+	        		jsonResult.put(jsonObj);
+	    			return jsonResult;
 				}
 	        	
-	        	return new JSONObject().put("mensagem", "Senha alterada com sucesso.");
+	        	jsonObj.put("mensagem", "Senha alterada com sucesso.");
+	        	jsonResult.put(jsonObj);
+    			return jsonResult;
 	         }
 	      });	
 	}
@@ -130,10 +150,23 @@ public class REST{
 	        	
 	            User user = model.loginUsername(cpf, password);
 	            
-	            if(user == null){
-	         	    return new JSONObject().put("mensagem", "CPF e/ou senha inválidos.");
+	            JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
+	        	if(user == null){
+	        		jsonObj.put("mensagem", "CPF e/ou senha inválidos.");
+	        		jsonObj.put("status", 0); //not logged
+	        		jsonResult.put(jsonObj);
+	        		
+	         	    return jsonResult;
             	}
-				return user;              	
+	        	
+    			jsonObj.put("username", user.getUsername());
+	        	jsonObj.put("fullname", user.getFullName());
+	        	jsonObj.put("accountType", user.getAccountType());
+	        	jsonObj.put("status", 1); //logged in
+	        	jsonResult.put(jsonObj);
+	        	
+				return jsonResult;
 	         }
 	      });	
 	}
@@ -144,18 +177,30 @@ public class REST{
             public Object handle(final Request request, final Response response){
 
 	        	response.header("Access-Control-Allow-Origin", "*");
-	            
 	        	JSONObject json = new JSONObject(request.body());
 	        	
 	        	String email = json.getString("username");
 	        	String password = json.getString("password");
 	        	
-	        	User user = model.loginUsername(email, password);
-	            
+	        	User user = model.loginEmail(email, password);
+	        	
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
 	        	if(user == null){
-	         	    return new JSONObject().put("mensagem", "Email e/ou senha inválidos.");
+	        		jsonObj.put("mensagem", "Email e/ou senha inválidos.");
+	        		jsonObj.put("status", 0); //not logged
+	        		jsonResult.put(jsonObj);
+	        		
+	         	    return jsonResult;
             	}
-				return user;
+	        	
+    			jsonObj.put("username", user.getUsername());
+	        	jsonObj.put("fullname", user.getFullName());
+	        	jsonObj.put("accountType", user.getAccountType());
+	        	jsonObj.put("status", 1); //logged in
+	        	jsonResult.put(jsonObj);
+	        	
+				return jsonResult;
 	         }
 	      });	
 	}
@@ -174,10 +219,23 @@ public class REST{
 	        	
 	        	User user = model.loginUsername(username, password);
 	        	
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
 	        	if(user == null){
-	         	    return new JSONObject().put("mensagem", "Nome de usuário e/ou senha inválidos.");
+	        		jsonObj.put("mensagem", "Nome de usuário e/ou senha inválidos.");
+	        		jsonObj.put("status", 0); //not logged
+	        		jsonResult.put(jsonObj);
+	        		
+	         	    return jsonResult;
             	}
-				return user; 
+	        	
+    			jsonObj.put("username", user.getUsername());
+	        	jsonObj.put("fullname", user.getFullName());
+	        	jsonObj.put("accountType", user.getAccountType());
+	        	jsonObj.put("status", 1); //logged in
+	        	jsonResult.put(jsonObj);
+	        	
+				return jsonResult;	        	 
 	         }
 	      });	
 	}
@@ -193,20 +251,26 @@ public class REST{
 	        	
 	        	String username = json.getString("username");
 	        	
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
 	        	try {
 	        		model.removeUser(username);
 	        	} catch(RuntimeException e){
-	        		return new JSONObject().put("mensagem", e.getMessage()); 
+	        		jsonObj.put("mensagem", e.getMessage()); 
+	        		jsonResult.put(jsonObj);
+	    			return jsonResult;
 	        	}
 	        	
-        		return new JSONObject().put("mensagem", "Usuário deletado com sucesso.");
+        		jsonObj.put("mensagem", "Usuário deletado com sucesso.");
+        		jsonResult.put(jsonObj);
+    			return jsonResult;
 	         }
 	      });	
 	}
 
 	
 	
-	// Post rotes
+	// Post routes
 	public void addPost() {
 		post("/ceatePost", new Route() {
 			@Override
@@ -239,8 +303,12 @@ public class REST{
 	        	post.setPostType(postType);
 	        	
 	        	model.addPost(post);
-        		
-             	return new JSONObject().put("mensagem", "Post criado com sucesso!");  
+	        	
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
+             	jsonObj.put("mensagem", "Post criado com sucesso!");  
+             	jsonResult.put(jsonObj);
+    			return jsonResult;
 	         }
 	      });	
 	}
@@ -252,16 +320,13 @@ public class REST{
 
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
 	            try {
 	            	LinkedList<Post> posts = model.searchApprovedPost();
 	            	
 	            	if(posts != null){
-	            		JSONArray jsonResult = new JSONArray();
-	            		
 	            		for (Post p : posts) {
-		            		
-			         	    JSONObject jsonObj = new JSONObject();
-
 			         	    jsonObj.put("aprovado ", p.isApproved());
 			         	    jsonObj.put("titulo ", p.getTitle());
 			         	    jsonObj.put("descricao ", p.getDescription());
@@ -278,7 +343,9 @@ public class REST{
         			//e.printStackTrace();
         		}
 	         	    	
-	            return new JSONObject().put("mensagem", "Nenhum post encontrado.");
+	            jsonObj.put("mensagem", "Nenhum post encontrado.");
+	            jsonResult.put(jsonObj);
+    			return jsonResult;
 	         }
 	      });	
 	}
@@ -290,16 +357,13 @@ public class REST{
 
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
 	            try {
 	            	LinkedList<Post> posts = model.searchNonApprovedPost();
 	            	
 	            	if(posts != null){
-	            		JSONArray jsonResult = new JSONArray();
-	            		
 	            		for (Post p : posts) {
-		            		
-			         	    JSONObject jsonObj = new JSONObject();
-
 			         	    jsonObj.put("aprovado ", p.isApproved());
 			         	    jsonObj.put("titulo ", p.getTitle());
 			         	    jsonObj.put("descricao ", p.getDescription());
@@ -316,7 +380,9 @@ public class REST{
         			//e.printStackTrace();
         		}
 	         	    	
-	            return new JSONObject().put("mensagem", "Nenhum post encontrado.");
+	            jsonObj.put("mensagem", "Nenhum post encontrado.");
+	            jsonResult.put(jsonObj);
+    			return jsonResult;
 	         }
 	      });
 	}
@@ -328,16 +394,13 @@ public class REST{
 
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
 	            try {
 	            	LinkedList<Post> posts = model.searchPostsByType(request.params(":postType"));
 	            	
 	            	if(posts != null){
-	            		JSONArray jsonResult = new JSONArray();
-	            		
 	            		for (Post p : posts) {
-		            		
-			         	    JSONObject jsonObj = new JSONObject();
-
 			         	    jsonObj.put("aprovado ", p.isApproved());
 			         	    jsonObj.put("titulo ", p.getTitle());
 			         	    jsonObj.put("descricao ", p.getDescription());
@@ -354,7 +417,9 @@ public class REST{
         			//e.printStackTrace();
         		}
 	         	    	
-	            return new JSONObject().put("mensagem", "Nenhum post encontrado.");
+	            jsonObj.put("mensagem", "Nenhum post encontrado.");
+	            jsonResult.put(jsonObj);
+    			return jsonResult;
 	         }
 	      });
 	}
@@ -371,7 +436,11 @@ public class REST{
 	        	
 	        	model.approvePost(post);
 	        	
-        		return new JSONObject().put("mensagem", "Post aprovado com sucesso.");
+	        	JSONArray jsonResult = new JSONArray();
+	        	JSONObject jsonObj = new JSONObject();
+        		jsonObj.put("mensagem", "Post aprovado com sucesso.");
+        		jsonResult.put(jsonObj);
+    			return jsonResult;
 	         }
 	      });	
 	}

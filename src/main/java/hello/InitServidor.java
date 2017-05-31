@@ -24,7 +24,7 @@ public class InitServidor {
 		
 		REST controller = new REST(model); 
 		
-		// User rotes
+		// User routes
 		controller.addUser();
 		controller.changeEmail();
 		controller.changePassword();
@@ -33,7 +33,7 @@ public class InitServidor {
 		controller.loginUserName();
 		controller.removeUser();
 		
-		// Post rotes
+		// Post routes
 		controller.addPost();
 		controller.approvePost();
 		// controller.editPost();
