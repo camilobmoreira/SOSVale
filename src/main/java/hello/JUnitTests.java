@@ -32,7 +32,7 @@ public class JUnitTests {
 		user.setEmail("maria_joaquina@teste.com");
 		user.setPassword("123456");
 		user.setFullName("Maria Joaquina");
-		user.setCpf("44247355830");
+		user.setCpf("33023667870");
 		user.setAccountType((byte) 1);
 		try {
 			model.addUser(user);
@@ -67,13 +67,13 @@ public class JUnitTests {
 		Image image = new Image("Erupção vulcânica", "imagem", "vulcão");
 				
 		//06 - Criando novo post
-		Post post = new Post("Erupção no vulcão Xinxango", "Muita lava e chuva de meteoro", location, image, "majo");
+		Post post = new Post("Erupção no vulcão Xinxango", "Muita lava e chuva de meteoro", location, image, "majo", "incendio");
 		model.addPost(post);
 		model.approvePost(post);
 		assertEquals(post.getUsername(), "majo");
 		
 		//07 - Buscar post
-		assertEquals(post.getTitle(), model.searchApprovedPost("majo", "Erupção no vulcão Xinxango").getTitle());
+		assertEquals(post.getTitle(), model.searchApprovedPost().get(0).getTitle());
 		
 		/*
 		//08 - Editar post

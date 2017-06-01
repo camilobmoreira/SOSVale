@@ -122,6 +122,7 @@ public class User {
 	}
 	
 	// FIXME traduzir
+	// FIXME ARRUMAR VALIDAÇÃO DE CPF
 	private static String generateCPFControlNumber(String cpf) {
 		String nineDigitsCpf = cpf.substring(0, 9);
 		String c;
