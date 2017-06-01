@@ -137,7 +137,7 @@ public class REST{
 	}
 	
 	public void loginCpf() {
-		post("/login/username", new Route() {
+		post("/login/cpf", new Route() {
 			@Override
             public Object handle(final Request request, final Response response){
 
@@ -148,7 +148,7 @@ public class REST{
 	        	String cpf = json.getString("username");
 	        	String password = json.getString("password");
 	        	
-	            User user = model.loginUsername(cpf, password);
+	            User user = model.loginCpf(cpf, password);
 	            
 	            JSONArray jsonResult = new JSONArray();
 	        	JSONObject jsonObj = new JSONObject();
