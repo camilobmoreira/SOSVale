@@ -1,6 +1,8 @@
 package hello;
 import static org.junit.Assert.*;
 
+import java.util.Date;
+
 import org.junit.Test;
 
 /**
@@ -67,7 +69,14 @@ public class JUnitTests {
 		Image image = new Image("Erupção vulcânica", "imagem", "vulcão");
 				
 		//06 - Criando novo post
-		Post post = new Post("Erupção no vulcão Xinxango", "Muita lava e chuva de meteoro", location, image, "majo", "incendio");
+		Post post = new Post();
+		post.setTitle("Erupção no vulcão Xinxango");
+		post.setDescription("Muita lava e chuva de meteoro");
+		post.setLocation(location);
+		post.setImage(image);
+		post.setUsername("majo");
+		post.setPostType("incendio");
+		post.setPostingDate(new Date());
 		model.addPost(post);
 		model.approvePost(post);
 		assertEquals(post.getUsername(), "majo");

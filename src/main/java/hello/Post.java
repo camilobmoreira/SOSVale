@@ -1,5 +1,7 @@
 package hello;
 
+import java.util.Date;
+
 public class Post {
 	
 	private String title;
@@ -8,6 +10,7 @@ public class Post {
 	private Image image;
 	private String username;
 	private String postType;
+	private Date postingDate;
 	private boolean approved = false;
 	
 	public Post () {
@@ -15,7 +18,8 @@ public class Post {
 		this.approved = false;
 	}
 
-	public Post(String title, String description, Location location, Image image, String username, String postType) {
+	public Post(String title, String description, Location location, Image image, String username, String postType,
+			Date postingDate) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -23,7 +27,7 @@ public class Post {
 		this.image = image;
 		this.username = username;
 		this.postType = postType;
-		this.approved = false;
+		this.postingDate = postingDate;
 	}
 
 	public String getTitle() {
@@ -74,6 +78,14 @@ public class Post {
 		this.postType = postType;
 	}
 
+	public Date getPostingDate() {
+		return postingDate;
+	}
+
+	public void setPostingDate(Date postingDate) {
+		this.postingDate = postingDate;
+	}
+
 	public boolean isApproved() {
 		return approved;
 	}
@@ -82,7 +94,5 @@ public class Post {
 		this.approved = approved;
 	}
 	
-	
-	
-	
+
 }

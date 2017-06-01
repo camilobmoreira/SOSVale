@@ -5,6 +5,8 @@ package hello;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 
 import org.json.JSONArray;
@@ -301,6 +303,7 @@ public class REST{
 	        	post.setLocation(location);
 	        	post.setImage(image);
 	        	post.setPostType(postType);
+	        	post.setPostingDate(new Date()); 
 	        	
 	        	model.addPost(post);
 	        	
@@ -332,7 +335,10 @@ public class REST{
 			         	    jsonObj.put("descricao ", p.getDescription());
 			         	    jsonObj.put("imagem ", p.getImage());
 			         	    jsonObj.put("nome usuario ", p.getUsername());
-			         	    jsonObj.put("Categoria ", p.getPostType());
+			         	    jsonObj.put("categoria ", p.getPostType());
+			         	    jsonObj.put("data", 
+			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+			         	    			.format(p.getPostingDate()));
 			         	   
 			         	    jsonResult.put(jsonObj);	            			
 	            		}
@@ -369,7 +375,10 @@ public class REST{
 			         	    jsonObj.put("descricao ", p.getDescription());
 			         	    jsonObj.put("imagem ", p.getImage());
 			         	    jsonObj.put("nome usuario ", p.getUsername());
-			         	    jsonObj.put("Categoria ", p.getPostType());
+			         	    jsonObj.put("categoria ", p.getPostType());
+			         	    jsonObj.put("data",
+			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+			         	    			.format(p.getPostingDate()));
 			         	   
 			         	    jsonResult.put(jsonObj);	            			
 	            		}
@@ -406,7 +415,10 @@ public class REST{
 			         	    jsonObj.put("descricao ", p.getDescription());
 			         	    jsonObj.put("imagem ", p.getImage());
 			         	    jsonObj.put("nome usuario ", p.getUsername());
-			         	    jsonObj.put("Categoria ", p.getPostType());
+			         	    jsonObj.put("categoria ", p.getPostType());
+			         	    jsonObj.put("data",
+			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
+			         	    			.format(p.getPostingDate()));
 			         	   
 			         	    jsonResult.put(jsonObj);	            			
 	            		}
