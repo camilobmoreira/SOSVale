@@ -16,12 +16,12 @@
 	    return re.test(email);
 	}
 	
-	function validateCPF(cpf){
+	function validateCPF(cpf) {
 		var re = /^([0-9]{11})$/;
 		return re.test(cpf);
 	}
 	
-	function validateUser(user){
+	function validateUser(user) {
 		var re = /^[a-zA-Z0-9_-]{3,16}$/;
 		return re.test(user);
 	}
@@ -34,10 +34,8 @@
 				
 				var username = $('#username').val().trim();
 				var password = $('#password').val().trim();
-			
 		
 				if(validateEmail(username) == true) {
-					alert("Passou Email!");
 					$.post("/login/email", JSON.stringify({'username': username, 'password': password}), function(data){
 					
 						if(data[0].status == 0){
@@ -54,26 +52,44 @@
 						}
 					
 					}, "json");
-				}
-				else if(validateCPF(username) == true) {
+				} else if(validateCPF(username) == true) {
 					alert("Passou CPF!");
-				}
-				else if(validateUser(username) == true) {
-					alert("Passou Username!");
-				}
-	
-				$.getJSON("/login/user/"+username+"/"+password+"?format=json&jsoncallback=",function(data) {
-					
-					if(data[0].email == ""){ //data = retorno do JSON
+					$.post("/login/cpf", JSON.stringify({'username': username, 'password': password}), function(data){
+						if(data[0].status == 0){
+							alert(data[0].mensagem);
 
-						alert("Dados inválidos!");
-						$('#username').val("");
-						$('#password').val("");
+							window.location.href = '/index.html';
 						
-					} else {					
-						window.location.href = '/sucess.html';
-					}	
-				});
+						} else {
+					
+							sessionStorage.setItem("username", data[0].username);
+							sessionStorage.setItem("fullname", data[0].fullname);
+							sessionStorage.setItem("accountType", data[0].accountType);
+							window.location.href = '/PostsRecentes.html';
+						}
+					
+					}, "json");
+				} else if(validateUser(username) == true) {
+					alert("Passou Username!");
+					$.post("/login/username", JSON.stringify({'username': username, 'password': password}), function(data){
+					
+						if(data[0].status == 0){
+							alert(data[0].mensagem);
+
+							window.location.href = '/index.html';
+						
+						} else {
+					
+							sessionStorage.setItem("username", data[0].username);
+							sessionStorage.setItem("fullname", data[0].fullname);
+							sessionStorage.setItem("accountType", data[0].accountType);
+							window.location.href = '/PostsRecentes.html';
+						}
+					
+					}, "json");
+				} else {
+					alert("Dados inválidos!");
+				}
 			});			
 		});
 	</script>
