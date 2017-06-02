@@ -29,7 +29,7 @@ public class REST{
 	
 	// User routes
 	public void addUser() {
-		post("/addUser", new Route() {
+		post("/add/user", new Route() {
 			@Override
             public Object handle(final Request request, final Response response){
 
@@ -40,11 +40,19 @@ public class REST{
 	        	String fullName = json.getString("fullname");
 	        	String username = json.getString("username");
 	        	String password = json.getString("password");
+	        	String password2 = json.getString("password2");
 	        	String cpf = json.getString("cpf");
 	        	String email = json.getString("email");
     			
 	        	JSONArray jsonResult = new JSONArray();
 	        	JSONObject jsonObj = new JSONObject();
+	        	
+	        	if (!password.equals(password2)) {
+	        		jsonObj.put("mensagem", "Senhas não conferem.");
+	        		jsonObj.put("status", 0);
+	        		jsonResult.put(jsonObj);
+	        		return jsonResult;
+	        	} 
 	        	try {
 		        	User user = new User();
 		        	user.setFullName(fullName);
@@ -58,10 +66,12 @@ public class REST{
 	            	model.addUser(user);
         		} catch (RuntimeException e) {
         			jsonObj.put("mensagem", e.getMessage());
+        			jsonObj.put("status", 0);
         			jsonResult.put(jsonObj);
         			return jsonResult;
         		} 
 	        	jsonObj.put("mensagem", "Cadastrado com sucesso!");
+	        	jsonObj.put("status", 1);
 	        	jsonResult.put(jsonObj);
     			return jsonResult;
 	         }
