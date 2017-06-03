@@ -43,34 +43,40 @@
 
 							window.location.href = '/index.html';
 						
-						} else {
-					
-							sessionStorage.setItem("username", data[0].username);
-							sessionStorage.setItem("fullname", data[0].fullname);
-							sessionStorage.setItem("accountType", data[0].accountType);
+						} else if (data[0].accountType == 1) { // 0 = admin / 1 = user
+							localStorage.setItem("username", data[0].username);
+							localStorage.setItem("fullname", data[0].fullname);
+							localStorage.setItem("accountType", data[0].accountType);
 							window.location.href = '/PostsRecentes.html';
+						} else {
+							localStorage.setItem("username", data[0].username);
+							localStorage.setItem("fullname", data[0].fullname);
+							localStorage.setItem("accountType", data[0].accountType);
+							window.location.href = '/confirmacaoPost.html';
 						}
 					
 					}, "json");
 				} else if(validateCPF(username) == true) {
-					alert("Passou CPF!");
 					$.post("/login/cpf", JSON.stringify({'username': username, 'password': password}), function(data){
 						if(data[0].status == 0){
 							alert(data[0].mensagem);
 
 							window.location.href = '/index.html';
 						
-						} else {
-					
-							sessionStorage.setItem("username", data[0].username);
-							sessionStorage.setItem("fullname", data[0].fullname);
-							sessionStorage.setItem("accountType", data[0].accountType);
+						} else if (data[0].accountType == 1) { // 0 = admin / 1 = user
+							localStorage.setItem("username", data[0].username);
+							localStorage.setItem("fullname", data[0].fullname);
+							localStorage.setItem("accountType", data[0].accountType);
 							window.location.href = '/PostsRecentes.html';
+						} else {
+							localStorage.setItem("username", data[0].username);
+							localStorage.setItem("fullname", data[0].fullname);
+							localStorage.setItem("accountType", data[0].accountType);
+							window.location.href = '/confirmacaoPost.html';
 						}
 					
 					}, "json");
 				} else if(validateUser(username) == true) {
-					alert("Passou Username!");
 					$.post("/login/username", JSON.stringify({'username': username, 'password': password}), function(data){
 					
 						if(data[0].status == 0){
@@ -78,23 +84,28 @@
 
 							window.location.href = '/index.html';
 						
-						} else {
-					
-							sessionStorage.setItem("username", data[0].username);
-							sessionStorage.setItem("fullname", data[0].fullname);
-							sessionStorage.setItem("accountType", data[0].accountType);
+						} else if (data[0].accountType == 1) { // 0 = admin / 1 = user
+							localStorage.setItem("username", data[0].username);
+							localStorage.setItem("fullname", data[0].fullname);
+							localStorage.setItem("accountType", data[0].accountType);
 							window.location.href = '/PostsRecentes.html';
+						} else {
+							localStorage.setItem("username", data[0].username);
+							localStorage.setItem("fullname", data[0].fullname);
+							localStorage.setItem("accountType", data[0].accountType);
+							window.location.href = '/confirmacaoPost.html';
 						}
 					
 					}, "json");
 				} else {
 					alert("Dados inválidos!");
 				}
-			});			
+			});
 		});
 	</script>
   </head>
   <body>
+  		<br>
 		<br>
 		<br>	
 		<div class="container">
