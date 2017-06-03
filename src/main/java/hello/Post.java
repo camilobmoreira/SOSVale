@@ -1,8 +1,9 @@
 package hello;
 
+import java.util.Comparator;
 import java.util.Date;
 
-public class Post {
+public class Post implements Comparator<Date> {
 	
 	private String title;
 	private String description;
@@ -93,6 +94,10 @@ public class Post {
 	public void setApproved(boolean approved) {
 		this.approved = approved;
 	}
-	
 
+	@Override
+	public int compare(Date d1, Date d2) {
+		// TODO Auto-generated method stub
+		return d1.compareTo(d2);
+	}
 }

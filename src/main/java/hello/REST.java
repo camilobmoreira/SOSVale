@@ -7,7 +7,7 @@ import static spark.Spark.post;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,7 +61,6 @@ public class REST{
 	        		user.setCpf(cpf);
 	        		user.setEmail(email);
 		        	user.setAccountType((byte)1);
-	        	
 	        	
 	            	model.addUser(user);
         		} catch (RuntimeException e) {
@@ -336,7 +335,7 @@ public class REST{
 	        	JSONArray jsonResult = new JSONArray();
 	        	JSONObject jsonObj = new JSONObject();
 	            try {
-	            	LinkedList<Post> posts = model.searchApprovedPost();
+	            	List<Post> posts = model.searchApprovedPost();
 	            	
 	            	if(posts != null){
 	            		for (Post p : posts) {
@@ -376,7 +375,7 @@ public class REST{
 	        	JSONArray jsonResult = new JSONArray();
 	        	JSONObject jsonObj = new JSONObject();
 	            try {
-	            	LinkedList<Post> posts = model.searchNonApprovedPost();
+	            	List<Post> posts = model.searchNonApprovedPost();
 	            	
 	            	if(posts != null){
 	            		for (Post p : posts) {
@@ -416,7 +415,7 @@ public class REST{
 	        	JSONArray jsonResult = new JSONArray();
 	        	JSONObject jsonObj = new JSONObject();
 	            try {
-	            	LinkedList<Post> posts = model.searchPostsByType(request.params(":postType"));
+	            	List<Post> posts = model.searchPostsByType(request.params(":postType"));
 	            	
 	            	if(posts != null){
 	            		for (Post p : posts) {

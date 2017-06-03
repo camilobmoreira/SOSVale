@@ -1,6 +1,7 @@
 package hello;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.db4o.Db4oEmbedded;
@@ -173,9 +174,9 @@ public class Model {
 		}
 	}
 	
-	public LinkedList<Post> searchApprovedPost() {
+	public List<Post> searchApprovedPost() {
 		
-		LinkedList<Post> allApprovedPosts = new LinkedList<>();
+		List<Post> allApprovedPosts = new ArrayList<>();
 		Query query = posts.query();
 		query.constrain(Post.class);
 		ObjectSet<Post> allPosts = query.execute(); 
@@ -185,12 +186,17 @@ public class Model {
 					allApprovedPosts.add(post);
 			}
 		}
+		
+		if (allApprovedPosts != null) {
+			Collections.reverse(allApprovedPosts);
+		}
+		
 		return allApprovedPosts;
 	}
 	
-	public LinkedList<Post> searchNonApprovedPost() {
+	public List<Post> searchNonApprovedPost() {
 		
-		LinkedList<Post> allNonApprovedPosts = new LinkedList<>();
+		List<Post> allNonApprovedPosts = new ArrayList<>();
 		Query query = posts.query();
 		query.constrain(Post.class);
 		ObjectSet<Post> allPosts = query.execute(); 
@@ -200,12 +206,17 @@ public class Model {
 					allNonApprovedPosts.add(post);
 			}
 		}
+		
+		if (allNonApprovedPosts != null) {
+			Collections.reverse(allNonApprovedPosts);
+		}
+		
 		return allNonApprovedPosts;
 	}
 
-	public LinkedList<Post> searchPostsByType (String postType) {
+	public List<Post> searchPostsByType (String postType) {
 		
-		LinkedList<Post> allPostsByType = new LinkedList<>();
+		List<Post> allPostsByType = new ArrayList<>();
 		Query query = posts.query();
 		query.constrain(Post.class);
 		ObjectSet<Post> allPosts = query.execute(); 
@@ -217,6 +228,11 @@ public class Model {
 				}
 			}
 		}
+		
+		if (allPostsByType != null) {
+			Collections.reverse(allPostsByType);
+		}
+		
 		return allPostsByType;
 	}
 	

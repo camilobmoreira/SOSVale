@@ -11,14 +11,23 @@
 	
 	<script>
 		$(document).ready(function(){
-		$("#cpf").mask("999.999.999-99") 
-			$('form').submit(function(e){    
+		$("#cpf").mask("999.999.999-99");
+		
+			$('#Cadastrar').click(function(){    
+			var fullname = $('#fullname').val().trim();
+			var cpf = $('#cpf').val().trim();
+			var username = $('#username').val().trim();
+			var password = $('#password').val().trim();
+			var password2 = $('#password2').val().trim();
+			var email = $('#email').val().trim();
+			
 			
 			$.post("/add/user", JSON.stringify({'fullname': fullname, 'cpf': cpf,'username': username, 'password': password, 'password2': password2, 'email': email}), function(data){
 					
 						if(data[0].status == 0){
 							alert(data[0].mensagem);
-							alert('apagar senhas');
+							$('#password').val('');
+							$('#password2').val('');
 							
 						} else {
 							alert(data[0].mensagem);
@@ -49,11 +58,11 @@
 
 		<br><br>
 		
-		<form class="form-horizontal" method="post" id="form_cadastro">
+		<div>
 			
 		
-				<div class="form-group col-md-12 ">		
-					<input required="required" size="57" style="border-radius:5px;" type="text" id="nome" placeholder="Nome">
+			<div class="form-group col-md-12 ">		
+					<input required="required" size="57" style="border-radius:5px;" type="text" id="fullname" placeholder="Nome">
 			</div>
 			<div class="form-group col-md-6 col-xs-12">
 					<input required="required" size="25" type="text" id="cpf" style="border-radius:5px" placeholder="CPF">
@@ -71,17 +80,17 @@
 					<input required="required" type="password" size="25" style="border-radius:5px"  id="password" placeholder="Senha">
 			</div>
 			<div class="form-group col-md-6 col-xs-12" style="margin-left:5.5%" >
-					<input required="required" type="password" size="25" style="border-radius:5px;border-width:0px:" id="passwordC" placeholder="Confirmar Senha">
+					<input required="required" type="password" size="25" style="border-radius:5px;border-width:0px:" id="password2" placeholder="Confirmar Senha">
 			</div>
 			
 			<div class="row">
 			<div class="col-md-12 col-xs-12" style="text-align:center;">
 			<div class="row">
-			<button id="Cadastrar" onclick="" class="btn btn-primary">Confirmar</button>
+			<button id="Cadastrar" type="submit" class="btn btn-primary">Confirmar</button>
 			</div>
 			</div>
 			</div>
-		</form>
+		</div>
 		</div>
 		</div>
 		</div>
