@@ -60,7 +60,7 @@ public class REST{
 		        	user.setPassword(password);
 	        		user.setCpf(cpf);
 	        		user.setEmail(email);
-		        	user.setAccountType((byte)1);
+		        	user.setAccountType((byte)1); // 0 = admin / 1 = user
 	        	
 	            	model.addUser(user);
         		} catch (RuntimeException e) {
