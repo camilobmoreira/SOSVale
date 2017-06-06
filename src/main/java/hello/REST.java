@@ -283,7 +283,7 @@ public class REST{
 	
 	// Post routes
 	public void addPost() {
-		post("/ceatePost", new Route() {
+		post("/add/post", new Route() {
 			@Override
             public Object handle(final Request request, final Response response){
 
@@ -300,17 +300,17 @@ public class REST{
 	        	double longitude = json.getDouble("longitude");
 	        	Location location = new Location(latitude, longitude);
 	        	
-	        	String imgDescription = json.getString("imgDescription");
+	        	/*String imgDescription = json.getString("imgDescription");
 	        	String imgUrl = json.getString("imgUrl");
 	        	String imgIcon = json.getString("imgIcon");
-	        	Image image = new Image(imgDescription, imgUrl, imgIcon);      
+	        	Image image = new Image(imgDescription, imgUrl, imgIcon);*/      
 	        	
 	        	Post post = new Post();
 	        	post.setTitle(postTitle);
 	        	post.setDescription(postDescription);
 	        	post.setUsername(username);
 	        	post.setLocation(location);
-	        	post.setImage(image);
+	        	//post.setImage(image);
 	        	post.setPostType(postType);
 	        	post.setPostingDate(new Date()); 
 	        	
