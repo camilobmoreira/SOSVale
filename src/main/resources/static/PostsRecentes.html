@@ -26,6 +26,8 @@
     
     function mapAdress(){
     	
+    	
+    	
 	GMaps.geocode({
 		address: $('#address').val(),
 		callback: function(results, status) {
@@ -47,6 +49,12 @@
     } 
     
     $(document).ready(function() {
+    	
+    	var status = localStorage.getItem('Status');
+    	if(status != "logado"){
+    		window.location.href="index.html"; 		
+    	}
+    }
     	
       	prettyPrint();
 	map = new GMaps({
