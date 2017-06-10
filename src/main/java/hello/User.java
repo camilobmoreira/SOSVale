@@ -32,9 +32,9 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-
+	//FIXME
 	public void setPassword(String password) {
-		if (!User.passwordIsValid(password)) {
+		/*if (!User.passwordIsValid(password)) {
 			throw new RuntimeException("Senha inválida. \n"
     				+ "Precisa conter: \n"
     				+ "De 8 à 32 caracteres;"
@@ -42,7 +42,7 @@ public class User {
     				+ "Uma letra minuscula; \n"
     				+ "Uma letra maiuscula; \n"
     				+ "Um caracter especial.");
-		}
+		}*/
 		this.password = password;
 	}
 

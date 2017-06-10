@@ -406,7 +406,7 @@ public class REST{
 	}
 
 	public void searchPostsByType() {
-		get("/search/post/byType", new Route() {
+		get("/search/post/byType/:postType", new Route() {
 			@Override
             public Object handle(final Request request, final Response response){
 
