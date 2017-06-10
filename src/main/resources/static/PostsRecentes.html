@@ -86,7 +86,7 @@
     	});
       
       
-      
+      //Cadastro de post
       $('#Cadastrar').click(function(e){    
 	// Declaração de variaveis			
 			e.preventDefault();
@@ -105,7 +105,52 @@
 				window.location.href = '/PostsRecentes.html';
 			
 			}, "json");
-		});			
+		});
+		
+		//Lista posts incendio
+		$.getJSON("/search/post/byType/"+"incendio?format=json&jsoncallback=",function(data) {
+					
+					if(data[0].status == 0){
+
+						alert(data[0].mensagem);
+						
+					} else {
+					
+							$("#tituloIncendio").value(data[0].titulo);
+							$("#descricaoIncendio").value(data[0].descricao);
+
+					} 	
+				});		
+				
+		//Lista posts alagemento
+		$.getJSON("/search/post/byType/"+"alagamento?format=json&jsoncallback=",function(data) {
+					
+					if(data[0].status == 0){
+
+						alert(data[0].mensagem);
+						
+					} else {
+					
+							$("#tituloAlagamento").value(data[0].titulo);
+							$("#descricaoAlagamento").value(data[0].descricao);
+
+					} 	
+				});		
+				
+		//Lista posts deslizamento
+		$.getJSON("/search/post/byType/"+"deslizamento?format=json&jsoncallback=",function(data) {
+					
+					if(data[0].status == 0){
+
+						alert(data[0].mensagem);
+						
+					} else {
+					
+							$("#tituloDeslizamento").value(data[0].titulo);
+							$("#descricaoDeslizamento").value(data[0].descricao);
+
+					} 	
+				});			
       
   }); 
     
@@ -142,8 +187,8 @@
 <img src="img/Incendio.jpg" width="85%" style="border-radius:50%">
 </div>
 <div class="row">
-<p style="font-size:14px;color:#f68b1f;font-weight:900;margin-top:10px;margin-left:50px">Titulo do Post</p>
-<p style="text-align:justify;margin-left:20px">aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa</p>
+<p id="tituloIncendio" style="font-size:14px;color:#f68b1f;font-weight:900;margin-top:10px;margin-left:50px">Titulo do Post</p>
+<p id="descricaoIncendio" style="text-align:justify;margin-left:20px">aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa</p>
 </div>
 </div>
 </div>
@@ -172,8 +217,8 @@
 <img src="img/Alagamento.jpg" width="85%" style="border-radius:50%">
 </div>
 <div class="row">
-<p style="font-size:14px;color:#20bec6;font-weight:900;margin-top:10px;margin-left:50px">Titulo do Post</p>
-<p style="text-align:justify;margin-left:20px">aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa</p>
+<p id="tituloAlagamento" style="font-size:14px;color:#20bec6;font-weight:900;margin-top:10px;margin-left:50px">Titulo do Post</p>
+<p id="descricaoAlagamento" style="text-align:justify;margin-left:20px">aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa</p>
 </div>
 </div>
 </div>
@@ -204,8 +249,8 @@
 <img src="img/deslizamento.jpg" width="85%" style="border-radius:50%">
 </div>
 <div class="row">
-<p style="font-size:14px;color:#b2d235;font-weight:900;margin-top:10px;margin-left:50px">Titulo do Post</p>
-<p style="text-align:justify;margin-left:20px">aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa</p>
+<p id="tituloDeslizamento" style="font-size:14px;color:#b2d235;font-weight:900;margin-top:10px;margin-left:50px">Titulo do Post</p>
+<p id="descricaoDeslizamento" style="text-align:justify;margin-left:20px">aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa<br>aaaaaaaaaaaaaaaaaaaaaaa</p>
 </div>
 </div>
 </div>

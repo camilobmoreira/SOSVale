@@ -59,9 +59,9 @@ public class User {
 	}
 
 	public void setCpf(String cpf) {
-		if (!cpfIsValid(cpf)) {
+		/*if (!cpfIsValid(cpf)) {
 			throw new RuntimeException("Cpf inválido.");
-		}
+		}*/
 		this.cpf = cpf;
 	}
 

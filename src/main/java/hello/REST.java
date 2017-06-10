@@ -414,8 +414,9 @@ public class REST{
 	            
 	        	JSONArray jsonResult = new JSONArray();
 	        	JSONObject jsonObj = new JSONObject();
+	        	String postType = request.params(":postType");
 	            try {
-	            	List<Post> posts = model.searchPostsByType(request.params(":postType"));
+	            	List<Post> posts = model.searchPostsByType(postType);
 	            	
 	            	if(posts != null){
 	            		for (Post p : posts) {
@@ -438,7 +439,8 @@ public class REST{
         			//e.printStackTrace();
         		}
 	         	    	
-	            jsonObj.put("mensagem", "Nenhum post encontrado.");
+	            jsonObj.put("mensagem", "Nenhum post da categoria " + postType + " encontrado.");
+	            jsonObj.put("status", 0);
 	            jsonResult.put(jsonObj);
     			return jsonResult;
 	         }
