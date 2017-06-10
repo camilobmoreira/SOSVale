@@ -300,6 +300,7 @@ public class REST{
 	        	double longitude = json.getDouble("longitude");
 	        	Location location = new Location(latitude, longitude);
 	        	
+	        	// FIXME
 	        	/*String imgDescription = json.getString("imgDescription");
 	        	String imgUrl = json.getString("imgUrl");
 	        	String imgIcon = json.getString("imgIcon");
@@ -415,6 +416,8 @@ public class REST{
 	        	JSONArray jsonResult = new JSONArray();
 	        	JSONObject jsonObj = new JSONObject();
 	        	String postType = request.params(":postType");
+	        	
+	        	System.out.println("search post by type: "  + postType);
 	            try {
 	            	List<Post> posts = model.searchPostsByType(postType);
 	            	
@@ -433,6 +436,7 @@ public class REST{
 			         	    jsonResult.put(jsonObj);	            			
 	            		}
 		             	
+	            		System.out.println("Encontrado " + jsonResult.length() + " posts de " + postType);
 						return jsonResult;
 	            	} else { }
         		} catch (JSONException e) {

@@ -8,16 +8,18 @@ import org.junit.Test;
 /**
  * STORY CARDS
  * 01 - Cadastrar usuario
- * 02 - Logar com username
- * 03 - Matches da classe conta
- * 04 - Editar usuario
- * 05 - Remover usuario 
- * 06 - Cadastrar post
- * 07 - Buscar post
- * 08 - Editar post
- * 09 - Aprovar post
- * 10 - Validar CPF
- * 11 - Add Admin
+ * 02 - Cadastrar administrador
+ * 03 - Logar com username
+ * 04 - Matches da classe conta
+ * 05 - Editar usuario
+ * 06 - Remover usuario 
+ * 07 - Cadastrar post de incendio
+ * 08 - Cadastrar post de alagamento
+ * 09 - Cadastrar post de deslizamento
+ * 10 - Buscar post
+ * 11 - Editar post
+ * 12 - Aprovar post
+ * 13 - Validar CPF
  * */
 
 public class JUnitTests {
@@ -32,9 +34,9 @@ public class JUnitTests {
 		User user = new User();
 		user.setUsername("majo");
 		user.setEmail("maria_joaquina@teste.com");
-		user.setPassword("123456");
+		user.setPassword("12345");
 		user.setFullName("Maria Joaquina");
-		user.setCpf("33023667870");
+		user.setCpf("44247355830");
 		user.setAccountType((byte) 1);
 		try {
 			model.addUser(user);
@@ -43,21 +45,35 @@ public class JUnitTests {
 			//System.out.println(e.getMessage());
 		}
 		
+		//02 - Criando e cadastrando administrador
+		User admin = new User();
+		admin.setUsername("root");
+		admin.setEmail("root");
+		admin.setPassword("12345");
+		admin.setFullName("Administrador 01");
+		admin.setCpf("33023667870");
+		admin.setAccountType((byte) 0);
+		try {
+			model.addUser(admin);
+			assertEquals(model.getUsers().size(), 2);
+		} catch (RuntimeException e) {
+			//System.out.println(e.getMessage());
+		}
 
 		//03 - Logar com username
-		User u = model.loginUsername("majo", "123456");
+		User u = model.loginUsername("majo", "12345");
 		assertEquals(user.getUsername(), u.getUsername());
 		
-		//03 - Matches da classe User
+		//04 - Matches da classe User
 		assertEquals(user.matches(user.getCpf(), user.getEmail(), user.getUsername(), user.getPassword()), true);
-		assertEquals(user.matches("12345678900", "jfran@gmail.com", "jfran", "654321"), false);
+		assertEquals(admin.matches("12345678900", "jfran@gmail.com", "jfran", "654321"), false);
 		
 		/*
-		//04 - Editar usuario
+		//05 - Editar usuario
 		model.editarUsuario(conta, "maria_joaquina@gmail.com", "senha");
 		assertEquals(conta.getEmail(), "maria_joaquina@gmail.com");
 		
-		//05 - Remover usuario
+		//06 - Remover usuario
 		model.removerUsuario(conta);
 		assertEquals(model.getUsuarios().size(), 0);
 		*/
@@ -68,33 +84,61 @@ public class JUnitTests {
 		//Criando nova imagem
 		Image image = new Image("Erupção vulcânica", "imagem", "vulcão");
 				
-		//06 - Criando novo post
-		Post post = new Post();
-		post.setTitle("Erupção no vulcão Xinxango");
-		post.setDescription("Muita lava e chuva de meteoro");
-		post.setLocation(location);
-		post.setImage(image);
-		post.setUsername("majo");
-		post.setPostType("incendio");
-		post.setPostingDate(new Date());
-		model.addPost(post);
-		model.approvePost(post);
-		assertEquals(post.getUsername(), "majo");
+		//07 - Criando novo post de incendio
+		Post pI = new Post();
+		pI.setTitle("Erupção no vulcão Xinxango");
+		pI.setDescription("Muita lava e chuva de meteoro");
+		pI.setLocation(location);
+		pI.setImage(image);
+		pI.setUsername("majo");
+		pI.setPostType("incendio");
+		pI.setPostingDate(new Date());
+		model.addPost(pI);
+		model.approvePost(pI);
+		assertEquals(pI.getUsername(), "majo");
 		
-		//07 - Buscar post
-		assertEquals(post.getTitle(), model.searchApprovedPost().get(0).getTitle());
+		//08 - Criando novo post de alagamento
+		Post pA = new Post();
+		pA.setTitle("Alagamento no ultimo andar das torres gemeas");
+		pA.setDescription("Agua até o teto");
+		pA.setLocation(location);
+		pA.setImage(image);
+		pA.setUsername("majo");
+		pA.setPostType("alagamento");
+		pA.setPostingDate(new Date());
+		model.addPost(pA);
+		model.approvePost(pA);
+		assertEquals(pA.getUsername(), "majo");
+		
+		//09 - Criando novo post de deslizamento
+		Post pD = new Post();
+		pD.setTitle("Deslizamento na duna proxima ao cacto que parece um Y no deserto do Saara");
+		pD.setDescription("Muita areia deslizando");
+		pD.setLocation(location);
+		pD.setImage(image);
+		pD.setUsername("majo");
+		pD.setPostType("deslizamento");
+		pD.setPostingDate(new Date());
+		model.addPost(pD);
+		model.approvePost(pD);
+		assertEquals(pD.getUsername(), "majo");
+		
+		//10 - Buscar post
+		assertEquals(pI.getTitle(), model.searchPostsByType("incendio").get(0).getTitle());
+		assertEquals(pA.getTitle(), model.searchPostsByType("alagamento").get(0).getTitle());
+		assertEquals(pD.getTitle(), model.searchPostsByType("deslizamento").get(0).getTitle());
 		
 		/*
-		//08 - Editar post
+		//11 - Editar post
 		Post post1 = new Post("Erupção no vulcão Xinxango", "Muita lava e chuva de pedra", localizacao, imagem, "majo", false);
 		model.editarPost(post, post1);
 		assertEquals(post1.getDescricao(), model.buscarPost("majo", "Erupção no vulcão Xinxango").getDescricao());
 		
-		//09 - Aprovar post
+		//12 - Aprovar post
 		model.aprovarPost(model.buscarPost("majo", "Erupção no vulcão Xinxango"));
 		assertEquals(true, model.buscarPost("majo", "Erupção no vulcão Xinxango").isAprovado());
 		*/
-		//10 - Validar CPF
+		//13 - Validar CPF
 		assertEquals(true, User.cpfIsValid("44247355830"));
 	}
 

@@ -34,8 +34,8 @@
 				map.setCenter(latlng.lat(), latlng.lng());
 				latitude = latlng.lat();
 				longitude = latlng.lng();
-				alert(latitude);
-				alert(longitude);
+				//alert(latitude);
+				//alert(longitude);
 				map.addMarker({
 					lat: latlng.lat(),
 					lng: latlng.lng()
@@ -64,8 +64,8 @@
 			map.setCenter(position.coords.latitude, position.coords.longitude);
 			latitude = position.coords.latitude;
 			longitude = position.coords.longitude;
-			alert(latitude);
-			alert(longitude);
+			//alert(latitude);
+			//alert(longitude);
 	
 			map.addMarker({
 				lat: latitude,
@@ -83,70 +83,71 @@
 		}
 	});
 
-								alert("oi 1");
-		//Lista posts incendio
-		$.getJSON("/search/post/byType/incendio?format=json&jsoncallback=",function(data) {
-								alert("oi 2");
-					
-			if(data[0].status == 0){
+	//Lista posts incendio
+	$.getJSON("/search/post/byType/incendio?format=json&jsoncallback=",function(data) {
+							alert("oi incendio");
+				
+		if(data[0].status == 0){
 
-				alert(data[0].mensagem);
+			alert(data[0].mensagem);
+		
+		} else {
+			alert(data);
+			alert(data[0].titulo);
+			alert(data[1].titulo);
+
+			$("#tituloIncendio").value(data[0].titulo);
+			$("#descricaoIncendio").value(data[0].descricao);
+		} 	
+	});		
 			
-			} else {
-				alert(data[0].titulo);
+	//Lista posts alagemento
+	$.getJSON("/search/post/byType/alagamento?format=json&jsoncallback=",function(data) {
+								alert("oi alagamento");	
+		if(data[0].status == 0){
+
+			alert(data[0].mensagem);
+			
+		} else {
+			$("#tituloAlagamento").value(data[0].titulo);
+			$("#descricaoAlagamento").value(data[0].descricao);
+		} 	
+	});		
+			
+	//Lista posts deslizamento
+	$.getJSON("/search/post/byType/deslizamento?format=json&jsoncallback=",function(data) {
+								alert("oi deslizamento");
+		if(data[0].status == 0){
+
+			alert(data[0].mensagem);
+		
+		} else {
 	
-				$("#tituloIncendio").value(data[0].titulo);
-				$("#descricaoIncendio").value(data[0].descricao);
-			} 	
-		});		
-				
-		//Lista posts alagemento
-		$.getJSON("/search/post/byType/alagamento?format=json&jsoncallback=",function(data) {
-				
-			if(data[0].status == 0){
+			$("#tituloDeslizamento").value(data[0].titulo);
+			$("#descricaoDeslizamento").value(data[0].descricao);
 
-				alert(data[0].mensagem);
-				
-			} else {
-				$("#tituloAlagamento").value(data[0].titulo);
-				$("#descricaoAlagamento").value(data[0].descricao);
-			} 	
-		});		
-				
-		//Lista posts deslizamento
-		$.getJSON("/search/post/byType/deslizamento?format=json&jsoncallback=",function(data) {
-					
-			if(data[0].status == 0){
-
-				alert(data[0].mensagem);
+		} 	
+	});
 			
-			} else {
+      //Cadastro de post
+      $('#Cadastrar').click(function(){    
+	
+		// Declaração de variaveis						
+		var e = document.getElementById("categoria");
+		var postType = e.options[e.selectedIndex].text;						
+		var title = $('#titulo').val().trim();
+		var postDescription = $('#descricao').val().trim();
 		
-				$("#tituloDeslizamento").value(data[0].titulo);
-				$("#descricaoDeslizamento").value(data[0].descricao);
-
-			} 	
-		});
-				
-	      //Cadastro de post
-	      $('#Cadastrar').click(function(){    
+		var username = localStorage.getItem("username");
 		
-			// Declaração de variaveis						
-			var e = document.getElementById("categoria");
-			var postType = e.options[e.selectedIndex].text;						
-			var title = $('#titulo').val().trim();
-			var postDescription = $('#descricao').val().trim();
+		$.post("/add/post", JSON.stringify({'postTitle' :title, 'postDescription' :postDescription, 'username' :username, 'postType' :postType, 'latitude' :latitude, 'longitude' :longitude }), function(data){
 			
-			var username = localStorage.getItem("username");
-			
-			$.post("/add/post", JSON.stringify({'postTitle' :title, 'postDescription' :postDescription, 'username' :username, 'postType' :postType, 'latitude' :latitude, 'longitude' :longitude }), function(data){
-				
-				alert(data[0].mensagem);
+			alert(data[0].mensagem);
 
-				window.location.href = '/PostsRecentes.html';
-			
-			}, "json");
-		});			
+			window.location.href = '/PostsRecentes.html';
+		
+		}, "json");
+	});			
   }); 
     
    
