@@ -362,6 +362,7 @@ public class REST{
         		}
 	            JSONObject jsonObj = new JSONObject();
 	            jsonObj.put("mensagem", "Nenhum post encontrado.");
+	            jsonObj.put("status", 0);
 	            jsonResult.put(jsonObj);
     			return jsonResult;
 	         }
@@ -382,12 +383,12 @@ public class REST{
 	            	if(posts != null){
 	            		for (Post p : posts) {
 	            			JSONObject jsonObj = new JSONObject();
-			         	    jsonObj.put("aprovado ", p.isApproved());
-			         	    jsonObj.put("titulo ", p.getTitle());
-			         	    jsonObj.put("descricao ", p.getDescription());
-			         	    jsonObj.put("imagem ", p.getImage());
-			         	    jsonObj.put("nome usuario ", p.getUsername());
-			         	    jsonObj.put("categoria ", p.getPostType());
+			         	    jsonObj.put("aprovado", p.isApproved());
+			         	    jsonObj.put("titulo", p.getTitle());
+			         	    jsonObj.put("descricao", p.getDescription());
+			         	    jsonObj.put("imagem", p.getImage());
+			         	    jsonObj.put("nomeUsuario", p.getUsername());
+			         	    jsonObj.put("categoria", p.getPostType());
 			         	    jsonObj.put("data",
 			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
 			         	    			.format(p.getPostingDate()));
@@ -402,6 +403,7 @@ public class REST{
         		}
 	            JSONObject jsonObj = new JSONObject();
 	            jsonObj.put("mensagem", "Nenhum post encontrado.");
+	            jsonObj.put("status", 0);
 	            jsonResult.put(jsonObj);
     			return jsonResult;
 	         }
@@ -472,6 +474,7 @@ public class REST{
 	        	JSONArray jsonResult = new JSONArray();
 	        	JSONObject jsonObj = new JSONObject();
         		jsonObj.put("mensagem", "Post aprovado com sucesso.");
+        		jsonObj.put("status", 1);
         		jsonResult.put(jsonObj);
     			return jsonResult;
 	         }

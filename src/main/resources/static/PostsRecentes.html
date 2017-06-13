@@ -132,7 +132,7 @@
 		
 		var username = localStorage.getItem("username");
 		
-		$.post("/add/post", JSON.stringify({'postTitle' :title, 'postDescription' :postDescription, 'username' :username, 'postType' :postType, 'latitude' :latitude, 'longitude' :longitude }), function(data){
+		$.post("/add/post", JSON.stringify({'title' :title, 'postDescription' :postDescription, 'username' :username, 'postType' :postType, 'latitude' :latitude, 'longitude' :longitude }), function(data){
 			
 			alert(data[0].mensagem);
 
@@ -172,7 +172,7 @@
 
 <div class="col-lg-12" style="padding-top:10%;">
 <div class="row">
-<img src="img/Incendio.jpg" width="85%" style="border-radius:50%">
+<img src="img/incendio.jpg" width="85%" style="border-radius:50%">
 </div>
 <div class="row">
 <p id="tituloIncendio" style="font-size:14px;color:#f68b1f;font-weight:900;margin-top:10px;margin-left:50px"></p>
@@ -202,7 +202,7 @@
 
 <div class="col-lg-12" style="padding-top:10%;">
 <div class="row">
-<img src="img/Alagamento.jpg" width="85%" style="border-radius:50%">
+<img src="img/alagamento.jpg" width="85%" style="border-radius:50%">
 </div>
 <div class="row">
 <p id="tituloAlagamento" style="font-size:14px;color:#20bec6;font-weight:900;margin-top:10px;margin-left:50px"></p>
@@ -243,6 +243,7 @@
 </div>
 </div>
 </div>
+<a href="ListaCategoria.html">Todos os posts</a>
 </div>
 </div>
 
