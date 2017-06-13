@@ -85,46 +85,38 @@
 
 	//Lista posts incendio
 	$.getJSON("/search/post/byType/incendio?format=json&jsoncallback=",function(data) {
-							alert("oi incendio");
-				
 		if(data[0].status == 0){
-
-			alert(data[0].mensagem);
+			alert(data.mensagem);
 		
 		} else {
-			alert(data);
-			alert(data[0].titulo);
-			alert(data[1].titulo);
-
-			$("#tituloIncendio").value(data[0].titulo);
-			$("#descricaoIncendio").value(data[0].descricao);
+			//TODO: colocar nos campos do html.
+			$("#tituloIncendio").html(data[0].titulo);
+			$("#descricaoIncendio").html(data[0].descricao);
 		} 	
 	});		
 			
 	//Lista posts alagemento
 	$.getJSON("/search/post/byType/alagamento?format=json&jsoncallback=",function(data) {
-								alert("oi alagamento");	
 		if(data[0].status == 0){
 
 			alert(data[0].mensagem);
 			
 		} else {
-			$("#tituloAlagamento").value(data[0].titulo);
-			$("#descricaoAlagamento").value(data[0].descricao);
+			$("#tituloAlagamento").html(data[0].titulo);
+			$("#descricaoAlagamento").html(data[0].descricao);
 		} 	
 	});		
 			
 	//Lista posts deslizamento
 	$.getJSON("/search/post/byType/deslizamento?format=json&jsoncallback=",function(data) {
-								alert("oi deslizamento");
 		if(data[0].status == 0){
 
 			alert(data[0].mensagem);
 		
 		} else {
 	
-			$("#tituloDeslizamento").value(data[0].titulo);
-			$("#descricaoDeslizamento").value(data[0].descricao);
+			$("#tituloDeslizamento").html(data[0].titulo);
+			$("#descricaoDeslizamento").html(data[0].descricao);
 
 		} 	
 	});

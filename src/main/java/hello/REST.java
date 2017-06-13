@@ -5,6 +5,9 @@ package hello;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -334,31 +337,30 @@ public class REST{
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
 	        	JSONArray jsonResult = new JSONArray();
-	        	JSONObject jsonObj = new JSONObject();
 	            try {
 	            	List<Post> posts = model.searchApprovedPost();
 	            	
 	            	if(posts != null){
 	            		for (Post p : posts) {
-			         	    jsonObj.put("aprovado ", p.isApproved());
-			         	    jsonObj.put("titulo ", p.getTitle());
-			         	    jsonObj.put("descricao ", p.getDescription());
-			         	    jsonObj.put("imagem ", p.getImage());
-			         	    jsonObj.put("nome usuario ", p.getUsername());
-			         	    jsonObj.put("categoria ", p.getPostType());
+	        	        	JSONObject jsonObj = new JSONObject();
+			         	    jsonObj.put("aprovado", p.isApproved());
+			         	    jsonObj.put("titulo", p.getTitle());
+			         	    jsonObj.put("descricao", p.getDescription());
+			         	    jsonObj.put("imagem", p.getImage());
+			         	    jsonObj.put("nomeUsuario", p.getUsername());
+			         	    jsonObj.put("categoria", p.getPostType());
 			         	    jsonObj.put("data", 
 			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
 			         	    			.format(p.getPostingDate()));
-			         	   
 			         	    jsonResult.put(jsonObj);	            			
 	            		}
 		             	
 						return jsonResult;
-	            	} else { }
+	            	}
         		} catch (JSONException e) {
-        			//e.printStackTrace();
+        			e.printStackTrace();
         		}
-	         	    	
+	            JSONObject jsonObj = new JSONObject();
 	            jsonObj.put("mensagem", "Nenhum post encontrado.");
 	            jsonResult.put(jsonObj);
     			return jsonResult;
@@ -374,12 +376,12 @@ public class REST{
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
 	        	JSONArray jsonResult = new JSONArray();
-	        	JSONObject jsonObj = new JSONObject();
 	            try {
 	            	List<Post> posts = model.searchNonApprovedPost();
 	            	
 	            	if(posts != null){
 	            		for (Post p : posts) {
+	            			JSONObject jsonObj = new JSONObject();
 			         	    jsonObj.put("aprovado ", p.isApproved());
 			         	    jsonObj.put("titulo ", p.getTitle());
 			         	    jsonObj.put("descricao ", p.getDescription());
@@ -398,7 +400,7 @@ public class REST{
         		} catch (JSONException e) {
         			//e.printStackTrace();
         		}
-	         	    	
+	            JSONObject jsonObj = new JSONObject();
 	            jsonObj.put("mensagem", "Nenhum post encontrado.");
 	            jsonResult.put(jsonObj);
     			return jsonResult;
@@ -414,7 +416,6 @@ public class REST{
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
 	        	JSONArray jsonResult = new JSONArray();
-	        	JSONObject jsonObj = new JSONObject();
 	        	String postType = request.params(":postType");
 	        	
 	        	System.out.println("search post by type: "  + postType);
@@ -423,12 +424,13 @@ public class REST{
 	            	
 	            	if(posts != null){
 	            		for (Post p : posts) {
-			         	    jsonObj.put("aprovado ", p.isApproved());
-			         	    jsonObj.put("titulo ", p.getTitle());
-			         	    jsonObj.put("descricao ", p.getDescription());
-			         	    jsonObj.put("imagem ", p.getImage());
-			         	    jsonObj.put("nome usuario ", p.getUsername());
-			         	    jsonObj.put("categoria ", p.getPostType());
+	            			JSONObject jsonObj = new JSONObject();
+	            			jsonObj.put("aprovado", p.isApproved());
+			         	    jsonObj.put("titulo", p.getTitle());
+			         	    jsonObj.put("descricao", p.getDescription());
+			         	    jsonObj.put("imagem", p.getImage());
+			         	    jsonObj.put("nomeUsuario", p.getUsername());
+			         	    jsonObj.put("categoria", p.getPostType());
 			         	    jsonObj.put("data",
 			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
 			         	    			.format(p.getPostingDate()));
@@ -438,11 +440,11 @@ public class REST{
 		             	
 	            		System.out.println("Encontrado " + jsonResult.length() + " posts de " + postType);
 						return jsonResult;
-	            	} else { }
+	            	}
         		} catch (JSONException e) {
-        			//e.printStackTrace();
+        			e.printStackTrace();
         		}
-	         	    	
+	            JSONObject jsonObj = new JSONObject();    	
 	            jsonObj.put("mensagem", "Nenhum post da categoria " + postType + " encontrado.");
 	            jsonObj.put("status", 0);
 	            jsonResult.put(jsonObj);
@@ -455,13 +457,17 @@ public class REST{
 		post("/approve/post", new Route() {
 			@Override
             public Object handle(final Request request, final Response response){
+				JSONObject json = new JSONObject(convertJSONString(request.body()));
 
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
 	        	// FIXME 
-	        	Post post = new Post(); //PEGAR POST DA VIEW
-	        	
-	        	model.approvePost(post);
+	        	for (Post p : model.searchNonApprovedPost()) {
+					if(p.getTitle().equals(json.getString("titulo"))) {
+						model.approvePost(p);
+						break;
+					}
+				}
 	        	
 	        	JSONArray jsonResult = new JSONArray();
 	        	JSONObject jsonObj = new JSONObject();
@@ -471,4 +477,24 @@ public class REST{
 	         }
 	      });	
 	}
+	
+	private String convertJSONString(String str){
+		
+		Charset utf8charset = Charset.forName("UTF-8");
+		Charset iso88591charset = Charset.forName("ISO-8859-1");
+	
+		ByteBuffer inputBuffer = ByteBuffer.wrap(str.getBytes());
+	
+		// decode UTF-8
+		CharBuffer data = utf8charset.decode(inputBuffer);
+	
+		// encode ISO-8559-1
+		ByteBuffer outputBuffer = iso88591charset.encode(data);
+		byte[] outputData = outputBuffer.array();
+		
+		str = new String(outputData);
+		
+		return str;
+	}
+	
 }

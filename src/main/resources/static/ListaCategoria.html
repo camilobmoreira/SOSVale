@@ -7,9 +7,54 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>SOSVale</title>
-     <script type="text/javascript" src="bootstrap-3.3.6-dist/js/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet" />
-
+	<script>
+		$(document).ready(function() {
+			$("#conteudo").html('');
+			
+			$("#form").submit(function(e) {
+				e.preventDefault();
+				
+				var titulo = $("#tituloAprovar").val();
+				$.post("/approve/post", JSON.stringfy({
+					'titulo' : titulo
+				}), function(data) {
+					if(data[0].status == 1) 
+						window.location = '/ListaCategoria.html';
+					else
+						alert('Erro!');
+				}, "json");
+			});
+			
+			$.getJSON("/search/post/NonApprovedPosts", function(data) {
+				var content = '';
+				$.each(data, function(i, item){
+					content += '<div class="col-lg-11" style="margin-top:15px">';
+					content += '<div class="row">';
+					content += '<div class="col-lg-3">';
+					content += '<img src="img/' + item.categoria + '.jpg" width="100%">';
+					content += '</div>';
+					content += '<div class="col-lg-9">';
+					content += '<p  style="font-weight:bold;font-size:14px">';
+					content += item.titulo;
+					content += '</p>';
+					content += '<p style="font-size:12px">';
+					content += item.descricao;
+					content += '</p></div></div></div>';
+					content += '<div style="float:right;"> <button type="button" onclick="aprovar(\'' + item.titulo + '\');" > Aprovar </button> </div>';
+				});
+				$("#conteudo").html(content);
+			});
+		});
+		
+		function aprovar(titulo) {
+			$("#tituloAprovar").val(titulo);
+			$("#form").submit();
+		}
+		
+		
+	</script>
 
 </head>
 
@@ -18,76 +63,11 @@
 <div class="col-lg-10 col-lg-offset-1">
 <div class="col-lg-6" style="padding-top:10%">
 <p style="text-align:center"><scan style="font-family:Arial,cursive,san-serif;font-size:40px;font-weight:900;color:#1C1C1C;letter-spacing:0px;">Posts Recentes</scan></p>
-<div style="overflow:auto;height:270px; width:100%;text-align:left;border-width:1px;border-color:#f68e34;border-color:gray;border-style:solid;border-radius:10px;margin-top:10%">
-<div class="col-lg-11" style="margin-top:15px">
-<div class="row">
-<div class="col-lg-3">
-<img src="img/deslizamento.jpg" width="100%">
+<form mehot="post" id="form">
+<input type="hidden" id="tituloAprovar" /s>
+<div id="conteudo" style="overflow:auto;height:270px; width:100%;text-align:left;border-width:1px;border-color:#f68e34;border-color:gray;border-style:solid;border-radius:10px;margin-top:10%">
 </div>
-<div class="col-lg-9">
-<p style="font-weight:bold;font-size:14px">
-Titulo POST
-</p>
-<p style="font-size:12px">
-aaaaaaaaaaaaaaaaaaaaaaa
-</p>
-</div>
-</div>
-</div>
-<div class="col-lg-12" style="background-color:rgba(0,0,0,0.4); background-position:center;width:80%; height:1px;margin-left:15px;margin-top:15px">
-</div>
-<div class="col-lg-11" style="margin-top:15px">
-<div class="row">
-<div class="col-lg-3">
-<img src="img/Incendio.jpg" width="100%">
-</div>
-<div class="col-lg-9">
-<p  style="font-weight:bold;font-size:14px">
-Titulo POST
-</p>
-<p style="font-size:12px">
-aaaaaaaaaaaaaaaaaaaaaaa
-</p>
-</div>
-</div>
-</div>
-<div class="col-lg-12" style="background-color:rgba(0,0,0,0.4); background-position:center;width:80%; height:1px;margin-left:15px;margin-top:15px">
-</div>
-<div class="col-lg-11" style="margin-top:15px">
-<div class="row">
-<div class="col-lg-3">
-<img src="img/Incendio.jpg" width="100%">
-</div>
-<div class="col-lg-9">
-<p  style="font-weight:bold;font-size:14px">
-Titulo POST
-</p>
-<p style="font-size:12px">
-aaaaaaaaaaaaaaaaaaaaaaa
-</p>
-</div>
-</div>
-</div>
-<div class="col-lg-12" style="background-color:rgba(0,0,0,0.4); background-position:center;width:80%; height:1px;margin-left:15px;margin-top:15px">
-</div>
-<div class="col-lg-11" style="margin-top:15px">
-<div class="row">
-<div class="col-lg-3">
-<img src="img/Incendio.jpg" width="100%">
-</div>
-<div class="col-lg-9">
-<p  style="font-weight:bold;font-size:14px">
-Titulo POST
-</p>
-<p style="font-size:12px">
-aaaaaaaaaaaaaaaaaaaaaaa
-</p>
-</div>
-</div>
-</div>
-<div class="col-lg-12" style="background-color:rgba(0,0,0,0.4); background-position:center;width:80%; height:1px;margin-left:15px;margin-top:15px">
-</div>
-</div>
+</form>
 </div>
 <div class="col-lg-6" style="text-align:center;padding-top:25%">
 <a><img src="img/logo.png"></a>
