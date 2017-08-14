@@ -1,9 +1,4 @@
-spark-heroku
-============
+SOSVale
+=======
 
-Spark Heroku skeleton
-
-To deploy your app
-
-	heroku apps:create [your_app_name]
-	git push heroku master
+Um projeto em java que usa spark-java, javascript, jquery, modelo MVC/REST, para registro de desastres ambientais.
