@@ -24,15 +24,15 @@
 					content += '<div class="col-lg-11" style="margin-top:15px">';
 					content += '<div class="row">';
 					content += '<div class="col-lg-3">';
-					content += '<img src="img/' + item.categoria + '.jpg" width="100%">';
+					content += '<img src="img/' + item.postType + '.jpg" width="100%">';
 					content += '</div>';
 					content += '<div class="col-lg-9">';
 					
 					content += '<p  style="font-weight:bold;font-size:14px">';
-					content += item.titulo;
+					content += item.title;
 					content += '</p>';
 					content += '<p style="font-size:12px">';
-					content += item.descricao;
+					content += item.description;
 					content += '</p></div></div></div>';
 				});
 				$("#conteudo").html(content);

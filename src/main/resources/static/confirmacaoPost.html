@@ -24,7 +24,7 @@
 				
 				var titulo = $("#tituloAprovar").val();
 				$.post("/approve/post", JSON.stringify({
-					'titulo' : titulo
+					'title' : title
 				}), function(data) {
 					if(data[0].status == 1) 
 						window.location = '/confirmacaoPost.html';
@@ -44,23 +44,23 @@
 					content += '<div class="col-lg-11" style="margin-top:15px">';
 					content += '<div class="row">';
 					content += '<div class="col-lg-3">';
-					content += '<img src="img/' + item.categoria + '.jpg" width="100%">';
+					content += '<img src="img/' + item.postType + '.jpg" width="100%">';
 					content += '</div>';
 					content += '<div class="col-lg-9">';
 					content += '<p  style="font-weight:bold;font-size:14px">';
-					content += item.titulo;
+					content += item.title;
 					content += '</p>';
 					content += '<p style="font-size:12px">';
-					content += item.descricao;
+					content += item.description;
 					content += '</p></div></div></div>';
-					content += '<div style="float:right;"> <button type="button" onclick="aprovar(\'' + item.titulo + '\');" > Aprovar </button> </div>';
+					content += '<div style="float:right;"> <button type="button" onclick="aprovar(\'' + item.title + '\');" > Aprovar </button> </div>';
 				});
 				$("#conteudo").html(content);
 			});
 		});
 		
-		function aprovar(titulo) {
-			$("#tituloAprovar").val(titulo);
+		function aprovar(title) {
+			$("#tituloAprovar").val(title);
 			$("#form").submit();
 		}
 		

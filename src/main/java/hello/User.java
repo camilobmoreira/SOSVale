@@ -5,7 +5,7 @@ public class User {
 	private String username;
 	private String email;
 	private String password;
-	private String fullName;
+	private String fullname;
 	private String cpf;
 	private byte accountType = 1; // 0 = admin / 1 = user
 	
@@ -47,11 +47,11 @@ public class User {
 	}
 
 	public String getFullName() {
-		return fullName;
+		return fullname;
 	}
 
 	public void setFullName(String fullName) {
-		this.fullName = fullName;
+		this.fullname = fullName;
 	}
 
 	public String getCpf() {

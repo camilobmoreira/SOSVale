@@ -295,7 +295,7 @@ public class REST{
 	        	JSONObject json = new JSONObject(request.body());
 	        	
 	        	String postTitle = json.getString("title");
-	        	String postDescription = json.getString("postDescription");
+	        	String description = json.getString("description");
 	        	String username = json.getString("username");
 	        	String postType = json.getString("postType");
 	        	
@@ -311,7 +311,7 @@ public class REST{
 	        	
 	        	Post post = new Post();
 	        	post.setTitle(postTitle);
-	        	post.setDescription(postDescription);
+	        	post.setDescription(description);
 	        	post.setUsername(username);
 	        	post.setLocation(location);
 	        	//post.setImage(image);
@@ -343,13 +343,13 @@ public class REST{
 	            	if(posts != null){
 	            		for (Post p : posts) {
 	        	        	JSONObject jsonObj = new JSONObject();
-			         	    jsonObj.put("aprovado", p.isApproved());
-			         	    jsonObj.put("titulo", p.getTitle());
-			         	    jsonObj.put("descricao", p.getDescription());
-			         	    jsonObj.put("imagem", p.getImage());
-			         	    jsonObj.put("nomeUsuario", p.getUsername());
-			         	    jsonObj.put("categoria", p.getPostType());
-			         	    jsonObj.put("data", 
+			         	    jsonObj.put("approved", p.isApproved());
+			         	    jsonObj.put("title", p.getTitle());
+			         	    jsonObj.put("description", p.getDescription());
+			         	    jsonObj.put("image", p.getImage());
+			         	    jsonObj.put("username", p.getUsername());
+			         	    jsonObj.put("postType", p.getPostType());
+			         	    jsonObj.put("postingDate", 
 			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
 			         	    			.format(p.getPostingDate()));
 			         	    jsonResult.put(jsonObj);	            			
@@ -383,13 +383,13 @@ public class REST{
 	            	if(posts != null){
 	            		for (Post p : posts) {
 	            			JSONObject jsonObj = new JSONObject();
-			         	    jsonObj.put("aprovado", p.isApproved());
-			         	    jsonObj.put("titulo", p.getTitle());
-			         	    jsonObj.put("descricao", p.getDescription());
-			         	    jsonObj.put("imagem", p.getImage());
-			         	    jsonObj.put("nomeUsuario", p.getUsername());
-			         	    jsonObj.put("categoria", p.getPostType());
-			         	    jsonObj.put("data",
+			         	    jsonObj.put("approved", p.isApproved());
+			         	    jsonObj.put("title", p.getTitle());
+			         	    jsonObj.put("description", p.getDescription());
+			         	    jsonObj.put("image", p.getImage());
+			         	    jsonObj.put("username", p.getUsername());
+			         	    jsonObj.put("postType", p.getPostType());
+			         	    jsonObj.put("postingDate",
 			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
 			         	    			.format(p.getPostingDate()));
 			         	   
@@ -427,13 +427,13 @@ public class REST{
 	            	if(posts != null){
 	            		for (Post p : posts) {
 	            			JSONObject jsonObj = new JSONObject();
-	            			jsonObj.put("aprovado", p.isApproved());
-			         	    jsonObj.put("titulo", p.getTitle());
-			         	    jsonObj.put("descricao", p.getDescription());
-			         	    jsonObj.put("imagem", p.getImage());
-			         	    jsonObj.put("nomeUsuario", p.getUsername());
-			         	    jsonObj.put("categoria", p.getPostType());
-			         	    jsonObj.put("data",
+	            			jsonObj.put("approved", p.isApproved());
+			         	    jsonObj.put("title", p.getTitle());
+			         	    jsonObj.put("description", p.getDescription());
+			         	    jsonObj.put("image", p.getImage());
+			         	    jsonObj.put("username", p.getUsername());
+			         	    jsonObj.put("postType", p.getPostType());
+			         	    jsonObj.put("postingDate",
 			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
 			         	    			.format(p.getPostingDate()));
 			         	   
@@ -465,7 +465,7 @@ public class REST{
 	            
 	        	// FIXME 
 	        	for (Post p : model.searchNonApprovedPost()) {
-					if(p.getTitle().equals(json.getString("titulo"))) {
+					if(p.getTitle().equals(json.getString("title"))) {
 						model.approvePost(p);
 						break;
 					}

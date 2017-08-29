@@ -23,7 +23,7 @@
     var map;
     var latitude;
     var longitude;
-    
+        $(document).ready(function() {
     function mapAdress(){
     	
 	GMaps.geocode({
@@ -45,7 +45,7 @@
 	});
     } 
     
-    $(document).ready(function() {
+
     	
     	var status = localStorage.getItem('Status');
     	if(status != "logado"){
