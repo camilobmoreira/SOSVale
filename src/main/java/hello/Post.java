@@ -1,17 +1,17 @@
 package hello;
 
+import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Date;
 
-public class Post implements Comparator<Date> {
+public class Post implements Comparator<Calendar> {
 	
 	private String title;
 	private String description;
 	private Location location;
-	private Image image;
+	private String image;
 	private String username;
 	private String postType;
-	private Date postingDate;
+	private Calendar postingDate;
 	private boolean approved = false;
 	
 	public Post () {
@@ -19,8 +19,7 @@ public class Post implements Comparator<Date> {
 		this.approved = false;
 	}
 
-	public Post(String title, String description, Location location, Image image, String username, String postType,
-			Date postingDate) {
+	public Post(String title, String description, Location location, String image, String username, String postType) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -28,7 +27,7 @@ public class Post implements Comparator<Date> {
 		this.image = image;
 		this.username = username;
 		this.postType = postType;
-		this.postingDate = postingDate;
+		this.postingDate = Calendar.getInstance();
 	}
 
 	public String getTitle() {
@@ -55,11 +54,11 @@ public class Post implements Comparator<Date> {
 		this.location = location;
 	}
 
-	public Image getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(Image image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 
@@ -79,11 +78,11 @@ public class Post implements Comparator<Date> {
 		this.postType = postType;
 	}
 
-	public Date getPostingDate() {
+	public Calendar getPostingDate() {
 		return postingDate;
 	}
-
-	public void setPostingDate(Date postingDate) {
+	
+	public void setPostingDate(Calendar postingDate) {
 		this.postingDate = postingDate;
 	}
 
@@ -96,7 +95,7 @@ public class Post implements Comparator<Date> {
 	}
 
 	@Override
-	public int compare(Date d1, Date d2) {
+	public int compare(Calendar d1, Calendar d2) {
 		// TODO Auto-generated method stub
 		return d1.compareTo(d2);
 	}

@@ -8,8 +8,7 @@ import static spark.Spark.post;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -316,7 +315,7 @@ public class REST{
 	        	post.setLocation(location);
 	        	//post.setImage(image);
 	        	post.setPostType(postType);
-	        	post.setPostingDate(new Date()); 
+	        	post.setPostingDate(Calendar.getInstance()); 
 	        	
 	        	model.addPost(post);
 	        	
@@ -343,15 +342,16 @@ public class REST{
 	            	if(posts != null){
 	            		for (Post p : posts) {
 	        	        	JSONObject jsonObj = new JSONObject();
-			         	    jsonObj.put("approved", p.isApproved());
 			         	    jsonObj.put("title", p.getTitle());
 			         	    jsonObj.put("description", p.getDescription());
 			         	    jsonObj.put("image", p.getImage());
+			         	    jsonObj.put("latitue", p.getLocation().getLatitude());
+			         	    jsonObj.put("longitude", p.getLocation().getLongitude());
 			         	    jsonObj.put("username", p.getUsername());
 			         	    jsonObj.put("postType", p.getPostType());
-			         	    jsonObj.put("postingDate", 
-			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-			         	    			.format(p.getPostingDate()));
+			         	    //jsonObj.put("postingDate", p.getPostingDate().toString()); //FIXME
+			         	    jsonObj.put("approved", p.isApproved());
+			         	    		
 			         	    jsonResult.put(jsonObj);	            			
 	            		}
 		             	
@@ -389,9 +389,7 @@ public class REST{
 			         	    jsonObj.put("image", p.getImage());
 			         	    jsonObj.put("username", p.getUsername());
 			         	    jsonObj.put("postType", p.getPostType());
-			         	    jsonObj.put("postingDate",
-			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-			         	    			.format(p.getPostingDate()));
+			         	    jsonObj.put("postingDate", p.getPostingDate().toString());
 			         	   
 			         	    jsonResult.put(jsonObj);	            			
 	            		}
@@ -433,9 +431,7 @@ public class REST{
 			         	    jsonObj.put("image", p.getImage());
 			         	    jsonObj.put("username", p.getUsername());
 			         	    jsonObj.put("postType", p.getPostType());
-			         	    jsonObj.put("postingDate",
-			         	    		new SimpleDateFormat("yyyy/MM/dd HH:mm:ss")
-			         	    			.format(p.getPostingDate()));
+			         	    jsonObj.put("postingDate", p.getPostingDate().toString());
 			         	   
 			         	    jsonResult.put(jsonObj);	            			
 	            		}
