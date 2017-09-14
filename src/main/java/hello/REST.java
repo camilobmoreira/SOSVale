@@ -156,7 +156,15 @@ public class REST{
 
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
-	        	JSONObject json = new JSONObject(request.body());
+	        	String jsonStr = request.body().toString();
+	        	
+	        	if (!jsonStr.contains("{")) {
+	        		jsonStr = "{\"" + jsonStr + "\"}";
+	        		jsonStr = jsonStr.replace("=", "\":\"");
+	        		jsonStr = jsonStr.replace("&", "\",\"");
+	        	}
+	        	
+	        	JSONObject json = new JSONObject(jsonStr);
 	        	
 	        	String cpf = json.getString("username");
 	        	String password = json.getString("password");
@@ -190,7 +198,16 @@ public class REST{
             public Object handle(final Request request, final Response response){
 
 	        	response.header("Access-Control-Allow-Origin", "*");
-	        	JSONObject json = new JSONObject(request.body());
+	        	
+	        	String jsonStr = request.body().toString();
+	        	
+	        	if (!jsonStr.contains("{")) {
+	        		jsonStr = "{\"" + jsonStr + "\"}";
+	        		jsonStr = jsonStr.replace("=", "\":\"");
+	        		jsonStr = jsonStr.replace("&", "\",\"");
+	        	}
+	        	
+	        	JSONObject json = new JSONObject(jsonStr);
 	        	
 	        	String email = json.getString("username");
 	        	String password = json.getString("password");
@@ -225,7 +242,15 @@ public class REST{
 
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
-	        	JSONObject json = new JSONObject(request.body());
+	        	String jsonStr = request.body().toString();
+	        	
+	        	if (!jsonStr.contains("{")) {
+	        		jsonStr = "{\"" + jsonStr + "\"}";
+	        		jsonStr = jsonStr.replace("=", "\":\"");
+	        		jsonStr = jsonStr.replace("&", "\",\"");
+	        	}
+	        	
+	        	JSONObject json = new JSONObject(jsonStr);
 	        	
 	        	String username = json.getString("username");
 	        	String password = json.getString("password");
