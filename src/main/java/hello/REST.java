@@ -158,11 +158,15 @@ public class REST{
 	            
 	        	String jsonStr = request.body().toString();
 	        	
+	        	System.out.println("login cpf params: " + jsonStr);
+	        	
 	        	if (!jsonStr.contains("{")) {
 	        		jsonStr = "{\"" + jsonStr + "\"}";
 	        		jsonStr = jsonStr.replace("=", "\":\"");
 	        		jsonStr = jsonStr.replace("&", "\",\"");
 	        	}
+	        	
+	        	System.out.println("login cpf params: " + jsonStr);
 	        	
 	        	JSONObject json = new JSONObject(jsonStr);
 	        	
@@ -179,6 +183,8 @@ public class REST{
 	        		jsonResult.put(jsonObj);
 	        		
 	         	    return jsonResult;
+            	} else {
+            		System.out.println(user.getFullName());
             	}
 	        	
     			jsonObj.put("username", user.getUsername());
@@ -201,11 +207,15 @@ public class REST{
 	        	
 	        	String jsonStr = request.body().toString();
 	        	
+	        	System.out.println("login email params: " + jsonStr);
+	        	
 	        	if (!jsonStr.contains("{")) {
 	        		jsonStr = "{\"" + jsonStr + "\"}";
 	        		jsonStr = jsonStr.replace("=", "\":\"");
 	        		jsonStr = jsonStr.replace("&", "\",\"");
 	        	}
+	        	
+	        	System.out.println("login email params: " + jsonStr);
 	        	
 	        	JSONObject json = new JSONObject(jsonStr);
 	        	
@@ -222,6 +232,8 @@ public class REST{
 	        		jsonResult.put(jsonObj);
 	        		
 	         	    return jsonResult;
+            	} else {
+            		System.out.println(user.getFullName());
             	}
 	        	
     			jsonObj.put("username", user.getUsername());
@@ -244,11 +256,15 @@ public class REST{
 	            
 	        	String jsonStr = request.body().toString();
 	        	
+	        	System.out.println("login username params: " + jsonStr);
+	        	
 	        	if (!jsonStr.contains("{")) {
 	        		jsonStr = "{\"" + jsonStr + "\"}";
 	        		jsonStr = jsonStr.replace("=", "\":\"");
 	        		jsonStr = jsonStr.replace("&", "\",\"");
 	        	}
+	        	
+	        	System.out.println("login username params: " + jsonStr);
 	        	
 	        	JSONObject json = new JSONObject(jsonStr);
 	        	
@@ -256,6 +272,8 @@ public class REST{
 	        	String password = json.getString("password");
 	        	
 	        	User user = model.loginUsername(username, password);
+	        	
+	        	
 	        	
 	        	JSONArray jsonResult = new JSONArray();
 	        	JSONObject jsonObj = new JSONObject();
@@ -265,6 +283,8 @@ public class REST{
 	        		jsonResult.put(jsonObj);
 	        		
 	         	    return jsonResult;
+            	} else {
+            		System.out.println(user.getFullName());
             	}
 	        	
     			jsonObj.put("username", user.getUsername());
