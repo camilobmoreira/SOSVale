@@ -336,7 +336,17 @@ public class REST{
 
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
-	        	JSONObject json = new JSONObject(request.body());
+	        	String jsonStr = request.body().toString();
+	        	
+	        	if (!jsonStr.contains("{")) {
+	        		jsonStr = "{\"" + jsonStr + "\"}";
+	        		jsonStr = jsonStr.replace("=", "\":\"");
+	        		jsonStr = jsonStr.replace("&", "\",\"");
+	        	}
+	        	
+	        	System.out.println(jsonStr);
+	        	
+	        	JSONObject json = new JSONObject(jsonStr);
 	        	
 	        	String postTitle = json.getString("title");
 	        	String description = json.getString("description");
