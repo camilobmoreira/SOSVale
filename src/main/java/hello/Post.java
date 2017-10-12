@@ -1,9 +1,9 @@
 package hello;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.Comparator;
 
-public class Post implements Comparator<Calendar> {
+public class Post implements Comparator<Date> {
 	
 	private String title;
 	private String description;
@@ -11,7 +11,7 @@ public class Post implements Comparator<Calendar> {
 	private String image;
 	private String username;
 	private String postType;
-	private Calendar postingDate;
+	private Date postingDate;
 	private boolean approved = false;
 	
 	public Post () {
@@ -19,7 +19,7 @@ public class Post implements Comparator<Calendar> {
 		this.approved = false;
 	}
 
-	public Post(String title, String description, Location location, String image, String username, String postType) {
+	public Post(String title, String description, Location location, String image, String username, String postType, Date postingDate) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -27,7 +27,7 @@ public class Post implements Comparator<Calendar> {
 		this.image = image;
 		this.username = username;
 		this.postType = postType;
-		this.postingDate = Calendar.getInstance();
+		this.postingDate = postingDate;
 	}
 
 	public String getTitle() {
@@ -78,11 +78,11 @@ public class Post implements Comparator<Calendar> {
 		this.postType = postType;
 	}
 
-	public Calendar getPostingDate() {
+	public Date getPostingDate() {
 		return postingDate;
 	}
 	
-	public void setPostingDate(Calendar postingDate) {
+	public void setPostingDate(Date postingDate) {
 		this.postingDate = postingDate;
 	}
 
@@ -95,7 +95,7 @@ public class Post implements Comparator<Calendar> {
 	}
 
 	@Override
-	public int compare(Calendar d1, Calendar d2) {
+	public int compare(Date d1, Date d2) {
 		// TODO Auto-generated method stub
 		return d1.compareTo(d2);
 	}

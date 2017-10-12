@@ -1,7 +1,7 @@
 package hello;
 import static org.junit.Assert.*;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -92,7 +92,7 @@ public class JUnitTests {
 		pI.setImage(image);
 		pI.setUsername("majo");
 		pI.setPostType("incendio");
-		pI.setPostingDate(Calendar.getInstance());
+		pI.setPostingDate(new Date());
 		model.addPost(pI);
 		model.approvePost(pI);
 		assertEquals(pI.getUsername(), "majo");
@@ -105,7 +105,7 @@ public class JUnitTests {
 		pA.setImage(image);
 		pA.setUsername("majo");
 		pA.setPostType("alagamento");
-		pA.setPostingDate(Calendar.getInstance());
+		pA.setPostingDate(new Date());
 		model.addPost(pA);
 		model.approvePost(pA);
 		assertEquals(pA.getUsername(), "majo");
@@ -118,7 +118,7 @@ public class JUnitTests {
 		pD.setImage(image);
 		pD.setUsername("majo");
 		pD.setPostType("deslizamento");
-		pD.setPostingDate(Calendar.getInstance());
+		pD.setPostingDate(new Date());
 		model.addPost(pD);
 		model.approvePost(pD);
 		assertEquals(pD.getUsername(), "majo");

@@ -8,7 +8,11 @@ import static spark.Spark.post;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -158,15 +162,11 @@ public class REST{
 	            
 	        	String jsonStr = request.body().toString();
 	        	
-	        	System.out.println("login cpf params: " + jsonStr);
-	        	
 	        	if (!jsonStr.contains("{")) {
 	        		jsonStr = "{\"" + jsonStr + "\"}";
 	        		jsonStr = jsonStr.replace("=", "\":\"");
 	        		jsonStr = jsonStr.replace("&", "\",\"");
 	        	}
-	        	
-	        	System.out.println("login cpf params: " + jsonStr);
 	        	
 	        	JSONObject json = new JSONObject(jsonStr);
 	        	
@@ -207,15 +207,11 @@ public class REST{
 	        	
 	        	String jsonStr = request.body().toString();
 	        	
-	        	System.out.println("login email params: " + jsonStr);
-	        	
 	        	if (!jsonStr.contains("{")) {
 	        		jsonStr = "{\"" + jsonStr + "\"}";
 	        		jsonStr = jsonStr.replace("=", "\":\"");
 	        		jsonStr = jsonStr.replace("&", "\",\"");
 	        	}
-	        	
-	        	System.out.println("login email params: " + jsonStr);
 	        	
 	        	JSONObject json = new JSONObject(jsonStr);
 	        	
@@ -256,15 +252,11 @@ public class REST{
 	            
 	        	String jsonStr = request.body().toString();
 	        	
-	        	System.out.println("login username params: " + jsonStr);
-	        	
 	        	if (!jsonStr.contains("{")) {
 	        		jsonStr = "{\"" + jsonStr + "\"}";
 	        		jsonStr = jsonStr.replace("=", "\":\"");
 	        		jsonStr = jsonStr.replace("&", "\",\"");
 	        	}
-	        	
-	        	System.out.println("login username params: " + jsonStr);
 	        	
 	        	JSONObject json = new JSONObject(jsonStr);
 	        	
@@ -352,6 +344,7 @@ public class REST{
 	        	String description = json.getString("description");
 	        	String username = json.getString("username");
 	        	String postType = json.getString("postType");
+	        		        	
 	        	
 	        	double latitude = json.getDouble("latitude");
 	        	double longitude = json.getDouble("longitude");
@@ -370,7 +363,22 @@ public class REST{
 	        	post.setLocation(location);
 	        	//post.setImage(image);
 	        	post.setPostType(postType);
-	        	post.setPostingDate(Calendar.getInstance()); 
+	        	try {
+	        		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	        		
+	        		post.setPostingDate(df.parse(json.getString("postingDate"))); //FIXME DELETAR ESSA LINHA E FAZER CONVERSAO DE STRING PARA DATE
+	        	} catch (NullPointerException e) {
+	        		post.setPostingDate(new Date());
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+	        		post.setPostingDate(new Date());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+	        		post.setPostingDate(new Date());
+				}
+	        	
 	        	
 	        	model.addPost(post);
 	        	
@@ -378,6 +386,8 @@ public class REST{
 	        	JSONObject jsonObj = new JSONObject();
              	jsonObj.put("mensagem", "Post criado com sucesso!");  
              	jsonResult.put(jsonObj);
+             	
+             	System.out.println(jsonResult);
     			return jsonResult;
 	         }
 	      });	
