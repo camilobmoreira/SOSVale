@@ -86,8 +86,8 @@ public class JUnitTests {
 				
 		//07 - Criando novo post de incendio
 		Post pI = new Post();
-		pI.setTitle("Erupção no vulcão Xinxango");
-		pI.setDescription("Muita lava e chuva de meteoro");
+		pI.setTitle("Incendio no Parque Tecnológico ");
+		pI.setDescription("Um incendio em Área de Proteção Permanente (APP) no Parque Tecnológico de São José dos Campos, atingiu a Fatec. O ocorrido interrompeu tres dias de aulas, atingiu  8 motos e 3 carros que haviam no estacionamento. Embora não teve feridos, os estragos foram exorbitantes. ");
 		pI.setLocation(location);
 		pI.setImage(image);
 		pI.setUsername("majo");
@@ -99,8 +99,9 @@ public class JUnitTests {
 		
 		//08 - Criando novo post de alagamento
 		Post pA = new Post();
-		pA.setTitle("Alagamento no ultimo andar das torres gemeas");
-		pA.setDescription("Agua até o teto");
+		pA.setTitle("Enxurrada no Cemitério Municipal de SJC");
+		pA.setDescription("Chuvas fortes causou inundação do Rio Paraíba do Sul, causando transtornos em São José dos Campos. No cemiterio municipal, a força da água destruiu alguns túmulos, e a enxurrada levou fragmentos por todo o centro da cidade.
+2016");
 		pA.setLocation(location);
 		pA.setImage(image);
 		pA.setUsername("majo");
@@ -112,8 +113,8 @@ public class JUnitTests {
 		
 		//09 - Criando novo post de deslizamento
 		Post pD = new Post();
-		pD.setTitle("Deslizamento na duna proxima ao cacto que parece um Y no deserto do Saara");
-		pD.setDescription("Muita areia deslizando");
+		pD.setTitle("Deslizamento de terra em bairro nobre");
+		pD.setDescription("Após três dias consecutivos de chuva, um loteamento irregular no bairro Urbanova (localizado na margem esquerda do Rio Paraíba do Sul) foi totalmente destruido por movimentos de massa do tipo planar. O ocorrido interditou o hospital ViValle e o Thermas do Vale, além de um intenso congestionamento próximo ao Anel Viário. ");
 		pD.setLocation(location);
 		pD.setImage(image);
 		pD.setUsername("majo");
