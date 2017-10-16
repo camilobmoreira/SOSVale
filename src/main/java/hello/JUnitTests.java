@@ -100,8 +100,7 @@ public class JUnitTests {
 		//08 - Criando novo post de alagamento
 		Post pA = new Post();
 		pA.setTitle("Enxurrada no Cemitério Municipal de SJC");
-		pA.setDescription("Chuvas fortes causou inundação do Rio Paraíba do Sul, causando transtornos em São José dos Campos. No cemiterio municipal, a força da água destruiu alguns túmulos, e a enxurrada levou fragmentos por todo o centro da cidade.
-2016");
+		pA.setDescription("Chuvas fortes causou inundação do Rio Paraíba do Sul, causando transtornos em São José dos Campos. No cemiterio municipal, a força da água destruiu alguns túmulos, e a enxurrada levou fragmentos por todo o centro da cidade.");
 		pA.setLocation(location);
 		pA.setImage(image);
 		pA.setUsername("majo");
