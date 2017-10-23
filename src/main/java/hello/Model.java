@@ -147,14 +147,12 @@ public class Model {
 		this.posts.commit();
 	}
 
-	// FIXME
 	public void approvePost(Post post) {
 		post.setApproved(true);
 		this.posts.store(post);
 		this.posts.commit();
 	}
 	
-	// FIXME
 	public void editPost(Post postAntigo, Post novoPost) {
 		Query query = posts.query();
 		query.constrain(Post.class);

@@ -96,7 +96,6 @@ public class Post implements Comparator<Date> {
 
 	@Override
 	public int compare(Date d1, Date d2) {
-		// TODO Auto-generated method stub
 		return d1.compareTo(d2);
 	}
 }

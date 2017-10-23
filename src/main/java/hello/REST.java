@@ -183,8 +183,6 @@ public class REST{
 	        		jsonResult.put(jsonObj);
 	        		
 	         	    return jsonResult;
-            	} else {
-            		System.out.println(user.getFullName());
             	}
 	        	
     			jsonObj.put("username", user.getUsername());
@@ -228,9 +226,7 @@ public class REST{
 	        		jsonResult.put(jsonObj);
 	        		
 	         	    return jsonResult;
-            	} else {
-            		System.out.println(user.getFullName());
-            	}
+            	} 
 	        	
     			jsonObj.put("username", user.getUsername());
 	        	jsonObj.put("fullname", user.getFullName());
@@ -275,9 +271,7 @@ public class REST{
 	        		jsonResult.put(jsonObj);
 	        		
 	         	    return jsonResult;
-            	} else {
-            		System.out.println(user.getFullName());
-            	}
+            	} 
 	        	
     			jsonObj.put("username", user.getUsername());
 	        	jsonObj.put("fullname", user.getFullName());
@@ -336,8 +330,6 @@ public class REST{
 	        		jsonStr = jsonStr.replace("&", "\",\"");
 	        	}
 	        	
-	        	System.out.println(jsonStr);
-	        	
 	        	JSONObject json = new JSONObject(jsonStr);
 	        	
 	        	String postTitle = json.getString("title");
@@ -366,15 +358,13 @@ public class REST{
 	        	try {
 	        		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	        		
-	        		post.setPostingDate(df.parse(json.getString("postingDate"))); //FIXME DELETAR ESSA LINHA E FAZER CONVERSAO DE STRING PARA DATE
+	        		post.setPostingDate(df.parse(json.getString("postingDate")));
 	        	} catch (NullPointerException e) {
 	        		post.setPostingDate(new Date());
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 	        		post.setPostingDate(new Date());
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 	        		post.setPostingDate(new Date());
 				}
@@ -387,7 +377,6 @@ public class REST{
              	jsonObj.put("mensagem", "Post criado com sucesso!");  
              	jsonResult.put(jsonObj);
              	
-             	System.out.println(jsonResult);
     			return jsonResult;
 	         }
 	      });	
@@ -483,7 +472,6 @@ public class REST{
 	        	JSONArray jsonResult = new JSONArray();
 	        	String postType = request.params(":postType");
 	        	
-	        	System.out.println("search post by type: "  + postType);
 	            try {
 	            	List<Post> posts = model.searchPostsByType(postType);
 	            	
@@ -501,7 +489,6 @@ public class REST{
 			         	    jsonResult.put(jsonObj);	            			
 	            		}
 		             	
-	            		System.out.println("Encontrado " + jsonResult.length() + " posts de " + postType);
 						return jsonResult;
 	            	}
         		} catch (JSONException e) {
@@ -524,7 +511,6 @@ public class REST{
 
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            
-	        	// FIXME 
 	        	for (Post p : model.searchNonApprovedPost()) {
 					if(p.getTitle().equals(json.getString("title"))) {
 						model.approvePost(p);

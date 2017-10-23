@@ -1,2 +1,3 @@
 /.gradle/
-/bd/
+/bd/*
+*.class
