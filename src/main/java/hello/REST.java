@@ -443,7 +443,7 @@ public class REST{
 			         	    jsonObj.put("image", p.getImage());
 			         	    jsonObj.put("username", p.getUsername());
 			         	    jsonObj.put("postType", p.getPostType());
-			         	    jsonObj.put("postingDate", p.getPostingDate().toString());
+			         	    //jsonObj.put("postingDate", p.getPostingDate().toString());
 			         	   
 			         	    jsonResult.put(jsonObj);	            			
 	            		}
@@ -508,6 +508,8 @@ public class REST{
 			@Override
             public Object handle(final Request request, final Response response){
 				JSONObject json = new JSONObject(convertJSONString(request.body()));
+				
+				String jsonStr = request.body().toString();
 
 	        	response.header("Access-Control-Allow-Origin", "*");
 	            

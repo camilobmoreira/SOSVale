@@ -24,7 +24,7 @@
 				
 				var titulo = $("#tituloAprovar").val();
 				$.post("/approve/post", JSON.stringify({
-					'title' : title
+					'title' : titulo
 				}), function(data) {
 					if(data[0].status == 1) 
 						window.location = '/confirmacaoPost.html';
