@@ -120,7 +120,7 @@ public class JUnitTests {
 		pD.setPostType("deslizamento");
 		pD.setPostingDate(new Date());
 		model.addPost(pD);
-		//model.approvePost(pD);
+		model.approvePost(pD);
 		assertEquals(pD.getUsername(), "majo");
 		
 		//10 - Buscar post
